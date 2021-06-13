@@ -1,0 +1,32 @@
+{
+  "name": "bilibili-valkyrie",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node build/index.js",
+    "prestart": "tsc",
+    "dev": "ts-node-dev index.ts",
+    "tsc": "tsc"
+  },
+  "license": "GPL-3.0",
+  "private": false,
+  "dependencies": {
+    "apollo-server-express": "^2.25.1",
+    "axios": "^0.21.1",
+    "bili-api": "^1.6.0",
+    "eslint-config-airbnb-typescript-prettier": "^4.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "graphql": "^15.5.0",
+    "mongoose": "^5.12.13"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.12",
+    "eslint": "^7.28.0",
+    "prettier": "^2.3.1",
+    "ts-node": "^10.0.0",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.3.2"
+  }
+}
