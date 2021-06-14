@@ -8,7 +8,6 @@ import Uper from "./models/Uper";
 import getUserSpace from "./api/getUserSpace";
 import logger from "./utils/logger";
 import addVideos from "./controllers/addVideos";
-import Video from "./models/Video";
 
 const databaseURL = config.get("dbConfig.URL") as string;
 
@@ -75,7 +74,6 @@ app.put("/api/markSubScribeRead/:mid", async (req, res, next) => {
 
 app.delete("/api/delSubScribe/:mid", async (req, res) => {
   await Uper.findByIdAndDelete(req.params.mid);
-  await Video.deleteMany({ uper: req.params.mid });
   res.status(204).end();
 });
 
