@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export interface GetUserInfoResData {
+export interface GetUperInfoResData {
   card: {
     mid: string;
     name: string;
@@ -81,17 +81,17 @@ export interface GetUserInfoResData {
   follower: number;
 }
 
-export interface GetUserInfoRes {
+export interface GetUperInfoRes {
   code: number;
   message: string;
   ttl: number;
-  data: GetUserInfoResData;
+  data: GetUperInfoResData;
 }
 
-const getUserInfo = async (mid: number | string): Promise<GetUserInfoRes> => {
+const getUperInfo = async (mid: number | string): Promise<GetUperInfoRes> => {
   const res = await axios.get(
     `http://api.bilibili.com/x/web-interface/card?mid=${mid}`
   );
   return res.data;
 };
-export default getUserInfo;
+export default getUperInfo;

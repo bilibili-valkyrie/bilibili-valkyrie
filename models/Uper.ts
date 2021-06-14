@@ -2,23 +2,18 @@
 /* eslint-disable no-underscore-dangle */
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://localhost:27017/valkyrie", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-});
-
-const userSchema = new mongoose.Schema({
+const uperSchema = new mongoose.Schema({
   _id: String,
   card: Object,
+  lastUpdate: Number,
   following: Boolean,
   archive_count: Number,
   article_count: Number,
   follower: Number,
+  videos: [{ type: Number, ref: "Video" }],
 });
 
-userSchema.set("toJSON", {
+uperSchema.set("toJSON", {
   transform: (_document: any, returnedObject: any) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -26,6 +21,6 @@ userSchema.set("toJSON", {
   },
 });
 
-const User = mongoose.model("User", userSchema);
+const Uper = mongoose.model("Uper", uperSchema);
 
-export default User;
+export default Uper;

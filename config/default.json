@@ -1,0 +1,6 @@
+{
+  "dbConfig": {
+    "URL": "mongodb://localhost:27017/valkyrie-test"
+  },
+  "port": 3000
+}
