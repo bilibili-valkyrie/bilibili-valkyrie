@@ -28,3 +28,10 @@ yarn start
 yarn
 yarn dev
 ```
+
+## 如何测试
+
+```bash
+yarn
+yarn test
+```
