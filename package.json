@@ -7,8 +7,9 @@
     "start": "cross-env NODE_ENV=production node build/index.js",
     "prestart": "tsc",
     "dev": "cross-env NODE_ENV=development ts-node-dev index.ts",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "tsc": "tsc"
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
+    "tsc": "tsc",
+    "rmDB:test": "cross-env NODE_ENV=test ts-node utils/rmDB.ts"
   },
   "license": "GPL-3.0",
   "private": false,

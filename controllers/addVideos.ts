@@ -34,6 +34,8 @@ const addVideos = async (
     videosSet.add(id);
   });
   uper.videos = Array.from(videosSet);
+  const savedUper = await uper.save();
+  return savedUper;
 };
 
 export default addVideos;

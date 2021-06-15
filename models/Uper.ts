@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 
 const uperSchema = new mongoose.Schema({
-  _id: String,
   card: Object,
   lastUpdate: Number,
   following: Boolean,
@@ -11,6 +10,7 @@ const uperSchema = new mongoose.Schema({
   article_count: Number,
   follower: Number,
   videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
+  mid: String,
 });
 
 uperSchema.set("toJSON", {

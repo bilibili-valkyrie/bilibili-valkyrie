@@ -1,7 +1,7 @@
-DELETE http://127.0.0.1:3000/api/delSubScribe/66607740 HTTP/1.1
+DELETE http://127.0.0.1:3000/api/delSubscribe/66607740 HTTP/1.1
 ###
 
-GET http://127.0.0.1:3000/api/addSubScribe/66607740 HTTP/1.1
+GET http://127.0.0.1:3000/api/addSubscribe/66607740 HTTP/1.1
 
 ###
 GET http://127.0.0.1:3000/api/getStatus/66607740 HTTP/1.1
@@ -10,7 +10,7 @@ GET http://127.0.0.1:3000/api/getStatus/66607740 HTTP/1.1
 GET http://127.0.0.1:3000/api/getAllStatus HTTP/1.1
 
 ###
-PUT http://127.0.0.1:3000/api/markSubScribeRead/66607740 HTTP/1.1
+PUT http://127.0.0.1:3000/api/markSubscribeRead/66607740 HTTP/1.1
 
 ###
 GET http://127.0.0.1:3000/api/getUpdate/66607740 HTTP/1.1
