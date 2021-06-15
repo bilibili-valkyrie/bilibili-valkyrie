@@ -3,6 +3,7 @@ import supertest from "supertest";
 import app from "../app";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
+import wait from "../utils/wait";
 
 const api = supertest(app);
 
@@ -43,6 +44,7 @@ describe("Subscribe update test", () => {
   test("can update subscribe's lastupdate", async () => {
     const res = await api.get("/api/getStatus/66607740");
     const firstUpdate = res.body.lastUpdate;
+    await wait(1000);
     const res2 = await api.put("/api/markSubScribeRead/66607740");
     const secondUpdate = res2.body.lastUpdate;
     expect(firstUpdate === secondUpdate).toBe(false);

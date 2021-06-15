@@ -1,14 +1,15 @@
 /* eslint-disable consistent-return */
-import express from "express";
 import config from "config";
+import { getUnixTime } from "date-fns";
+import express from "express";
 import mongoose from "mongoose";
 import getUperInfo from "./api/getUperInfo";
+import getUserSpace from "./api/getUserSpace";
+import addVideos from "./controllers/addVideos";
 import errorHandler from "./middlewares/errorHandler";
 import Uper from "./models/Uper";
 import Video from "./models/Video";
-import getUserSpace from "./api/getUserSpace";
 import logger from "./utils/logger";
-import addVideos from "./controllers/addVideos";
 
 const databaseURL = config.get("dbConfig.URL") as string;
 
@@ -54,7 +55,7 @@ app.get("/api/addSubScribe/:mid", async (req, res, next) => {
   const fmtedRes1 = {
     ...getUperInfoRes.data,
     _id: getUperInfoRes.data.card.mid,
-    lastUpdate: Date.now(),
+    lastUpdate: getUnixTime(Date.now()),
   };
   const newUper = new Uper(fmtedRes1);
   const getUserSpaceRes = await getUserSpace(req.params.mid);
@@ -68,9 +69,20 @@ app.put("/api/markSubScribeRead/:mid", async (req, res, next) => {
   if (uperInDB === null) {
     return next({ code: 404, message: `[404] Not Found ${req.params.mid}` });
   }
-  uperInDB.lastUpdate = Date.now();
+  uperInDB.lastUpdate = getUnixTime(Date.now());
   await uperInDB.save();
   res.json(uperInDB);
+});
+
+app.get("/api/getUpdate/:mid", async (req, res, next) => {
+  const uperInDB = await Uper.findById(req.params.mid);
+  if (uperInDB === null) {
+    return next({ code: 404, message: `[404] Not Found ${req.params.mid}` });
+  }
+  const newVideos = await Video.find()
+    .where("uper", req.params.mid)
+    .gte("created", uperInDB.lastUpdate);
+  res.json(newVideos);
 });
 
 app.delete("/api/delSubScribe/:mid", async (req, res) => {

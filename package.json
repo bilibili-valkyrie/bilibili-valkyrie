@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "bili-api": "^1.6.0",
     "config": "^3.3.6",
+    "date-fns": "^2.22.1",
     "eslint-config-airbnb-typescript-prettier": "^4.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
