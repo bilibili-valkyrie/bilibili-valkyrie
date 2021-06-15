@@ -11,15 +11,17 @@ const addVideos = async (
   uper: Record<string, any>
 ): Promise<void> => {
   const videoToDBPAry = vlist.map(async (newVideo) => {
-    const exist = await Video.exists({ _id: newVideo.aid });
+    const exist = await Video.exists({
+      aid: newVideo.aid,
+      uper: uper._id,
+    });
     if (!exist) {
       return {
         ...newVideo,
         uper: uper._id,
-        _id: newVideo.aid,
       };
     }
-    return undefined;
+    return false;
   });
   const videoToDB = await Promise.all(videoToDBPAry);
   const videoToDBCompacted = lodash.compact(videoToDB);

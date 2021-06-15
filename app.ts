@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import getUperInfo from "./api/getUperInfo";
 import errorHandler from "./middlewares/errorHandler";
 import Uper from "./models/Uper";
+import Video from "./models/Video";
 import getUserSpace from "./api/getUserSpace";
 import logger from "./utils/logger";
 import addVideos from "./controllers/addVideos";
@@ -74,6 +75,7 @@ app.put("/api/markSubScribeRead/:mid", async (req, res, next) => {
 
 app.delete("/api/delSubScribe/:mid", async (req, res) => {
   await Uper.findByIdAndDelete(req.params.mid);
+  await Video.deleteMany({ uper: req.params.mid });
   res.status(204).end();
 });
 

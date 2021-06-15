@@ -10,7 +10,7 @@ const uperSchema = new mongoose.Schema({
   archive_count: Number,
   article_count: Number,
   follower: Number,
-  videos: [{ type: Number, ref: "Video" }],
+  videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
 });
 
 uperSchema.set("toJSON", {

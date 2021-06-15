@@ -3,7 +3,6 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-  _id: Number,
   uper: { type: String, ref: "Uper" },
   comment: Number,
   typeid: Number,
