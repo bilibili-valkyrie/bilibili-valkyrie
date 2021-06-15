@@ -17,6 +17,7 @@ describe("Subscribe update test", () => {
     const secondUpdate = res2.body.lastUpdate;
     expect(firstUpdate === secondUpdate).toBe(false);
   });
+
   test("can set subscribe's lastUpdate time", async () => {
     const uperInDB = await initDB();
     const res = await api.get(`/api/getStatus/${uperInDB._id}`);
@@ -30,6 +31,7 @@ describe("Subscribe update test", () => {
     expect(secondUpdate).toBe(getUnixTime(now));
     expect(firstUpdate === secondUpdate).toBeFalsy();
   });
+
   test("can get updated videos", async () => {
     const uperInDB = await initDB();
     const res1 = await api.get(`/api/subU/getUpdate/${uperInDB._id}`);
