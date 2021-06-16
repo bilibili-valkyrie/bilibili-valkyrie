@@ -8,6 +8,8 @@ import addVideos from "../controllers/addVideos";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
 
+require("express-async-errors");
+
 const subscribeAddRemoveRouter = express.Router();
 
 subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
@@ -30,6 +32,7 @@ subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
 
 subscribeAddRemoveRouter.delete("/delSubscribe/:id", async (req, res) => {
   const uper = await Uper.findByIdAndDelete(req.params.id);
+  if (uper === null) return res.status(204).end();
   await Video.deleteMany({ uper: uper._id });
   res.status(204).end();
 });

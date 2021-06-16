@@ -1,11 +1,22 @@
 /* eslint-disable no-param-reassign */
 import mongoose from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
+
+export interface UserAsJSON {
+  subscribing: string[];
+  username: string;
+  name: string;
+  id: string;
+}
 
 const userSchema = new mongoose.Schema({
   subscribing: [{ type: mongoose.Schema.Types.ObjectId, ref: "Uper" }],
-  username: String,
+  username: { type: String, unique: true },
+  name: String,
   passwordHash: String,
 });
+
+userSchema.plugin(uniqueValidator);
 
 userSchema.set("toJSON", {
   transform: (_document: any, returnedObject: any) => {

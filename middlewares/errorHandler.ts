@@ -9,10 +9,12 @@ const errorHandler = (
   response: any,
   next: any
 ): void => {
-  logger.error(error.message);
+  logger.error(error);
   if (error.name === "CastError" && error.kind === "ObjectId") {
     return response.status(400).send({ error: "malformatted id" });
   }
+  if (error.errors && error.errors.username.kind === "unique")
+    return response.status(409).end();
 
   switch (error.code) {
     case 10000:

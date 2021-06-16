@@ -6,6 +6,7 @@ import errorHandler from "./middlewares/errorHandler";
 import Uper from "./models/Uper";
 import subscribeAddRemoveRouter from "./routers/subscribeAddRemoveRouter";
 import subscribeUpdateRouter from "./routers/subscribeUpdateRouter";
+import usersRouter from "./routers/usersRouter";
 import logger from "./utils/logger";
 
 const databaseURL = config.get("dbConfig.URL") as string;
@@ -43,6 +44,7 @@ app.get("/api/getAllStatus", async (_req, res) => {
   res.json(upersInDB);
 });
 
+app.use("/api/users", usersRouter);
 app.use("/api/subU", subscribeUpdateRouter);
 app.use("/api/subAR", subscribeAddRemoveRouter);
 
