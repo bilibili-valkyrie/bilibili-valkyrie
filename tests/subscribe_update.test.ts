@@ -44,6 +44,14 @@ describe("Subscribe update test", () => {
     const res3 = await api.get(`/api/subU/getUpdate/${uperInDB._id}`);
     expect(res3.body.length).toBe(2);
   });
+
+  test("can update uper's videos", async () => {
+    const uperInDB = await initDB();
+    const firstArchiveCount = uperInDB.archive_count;
+    const res1 = await api.get(`/api/subU/updateVideos/${uperInDB._id}`);
+    expect(-res1.body.updates).toBeLessThan(0);
+    expect(res1.body.newUper.archive_count === firstArchiveCount).toBeFalsy();
+  });
 });
 
 afterAll(async () => {
