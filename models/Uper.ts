@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
 import mongoose from "mongoose";
 
 const uperSchema = new mongoose.Schema({
