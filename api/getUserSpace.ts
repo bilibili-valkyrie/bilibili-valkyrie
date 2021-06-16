@@ -53,7 +53,13 @@ const getUserSpace = async (
   ps = 30
 ): Promise<QuerySpaceResData> => {
   const { data }: { data: QuerySpaceRes } = await axios.get(
-    `https://api.bilibili.com/x/space/arc/search?mid=${mid}&pn=${pn}&ps=${ps}`
+    `https://api.bilibili.com/x/space/arc/search?mid=${mid}&pn=${pn}&ps=${ps}`,
+    {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (X11; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0",
+      },
+    }
   );
   return data.data;
 };

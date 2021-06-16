@@ -90,7 +90,13 @@ export interface GetUperInfoRes {
 
 const getUperInfo = async (mid: number | string): Promise<GetUperInfoRes> => {
   const res = await axios.get(
-    `http://api.bilibili.com/x/web-interface/card?mid=${mid}`
+    `http://api.bilibili.com/x/web-interface/card?mid=${mid}`,
+    {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (X11; Linux x86_64; rv:89.0) Gecko/20100101 Firefox/89.0",
+      },
+    }
   );
   return res.data;
 };
