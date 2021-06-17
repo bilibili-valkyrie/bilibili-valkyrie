@@ -1,18 +1,10 @@
 import mongoose from "mongoose";
 import User from "../models/User";
 import api from "./helper/apiInstance";
+import tokenStorage from "./helper/tokenStorage";
 
 beforeAll(async () => {
   await User.deleteMany();
-});
-
-describe("users basic test", () => {
-  test("users are returned as json", async () => {
-    await api
-      .get("/api/users")
-      .expect(200)
-      .expect("Content-Type", /application\/json/);
-  });
 });
 
 describe("users add test", () => {
@@ -24,8 +16,12 @@ describe("users add test", () => {
     };
     const res1 = await api.post("/api/users").send(newUser).expect(200);
     expect(res1.body).toHaveProperty("id");
-    const res2 = await api.get(`/api/users/${res1.body.id}`);
-    expect(res2.body).toHaveProperty("username", "root");
+    const res2 = await api.post("/api/login").send(newUser);
+    tokenStorage.setToken(res2.body.token);
+    const res3 = await api
+      .get(`/api/users/${res1.body.id}`)
+      .set("authorization", `bearer ${tokenStorage.token}`);
+    expect(res3.body).toHaveProperty("username", "root");
   });
 
   test("would return 409 if conflict", async () => {
@@ -57,7 +53,11 @@ describe("users delete test", () => {
       kkk: "Superuser",
       password: "fkkkkyou",
     };
-    await api.delete("/api/users").send(userToDelete).expect(400);
+    await api
+      .delete("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send(userToDelete)
+      .expect(400);
   });
   test("can delete user", async () => {
     const userToDelete = {
@@ -65,7 +65,11 @@ describe("users delete test", () => {
       name: "Superuser",
       password: "fkkkkyou",
     };
-    await api.delete("/api/users").send(userToDelete).expect(204);
+    await api
+      .delete("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send(userToDelete)
+      .expect(204);
   });
   test("would return 404 if not exist", async () => {
     const userToDelete = {
@@ -73,7 +77,21 @@ describe("users delete test", () => {
       name: "Superuser",
       password: "fkkkkyou",
     };
-    await api.delete("/api/users").send(userToDelete).expect(404);
+    await api
+      .delete("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send(userToDelete)
+      .expect(404);
+  });
+});
+
+describe("users basic test", () => {
+  test("users are returned as json", async () => {
+    await api
+      .get("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
   });
 });
 
