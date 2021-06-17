@@ -19,6 +19,7 @@ const addVideos = async (
       return {
         ...newVideo,
         uper: uper._id,
+        subscriber: uper.subscriber,
       };
     }
     return false;

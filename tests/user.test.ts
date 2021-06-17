@@ -1,9 +1,6 @@
-import supertest from "supertest";
 import mongoose from "mongoose";
-import app from "../app";
 import User from "../models/User";
-
-const api = supertest(app);
+import api from "./helper/apiInstance";
 
 beforeAll(async () => {
   await User.deleteMany();

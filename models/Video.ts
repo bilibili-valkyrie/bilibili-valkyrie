@@ -25,6 +25,7 @@ const videoSchema = new mongoose.Schema({
   is_union_video: Number,
   is_steins_gate: Number,
   is_live_playback: Number,
+  subscriber: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 videoSchema.set("toJSON", {

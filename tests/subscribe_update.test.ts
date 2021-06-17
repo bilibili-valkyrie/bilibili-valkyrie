@@ -1,11 +1,8 @@
 import getUnixTime from "date-fns/getUnixTime";
 import mongoose from "mongoose";
-import supertest from "supertest";
-import app from "../app";
 import wait from "../utils/wait";
 import initDB from "./helper/testdb_init";
-
-const api = supertest(app);
+import api from "./helper/apiInstance";
 
 describe("Subscribe update test", () => {
   test("can mark subscribe as read", async () => {

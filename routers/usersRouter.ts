@@ -1,7 +1,9 @@
 import bcrypt from "bcryptjs";
 import express from "express";
 import config from "config";
+import jwt from "express-jwt";
 import User from "../models/User";
+import expressjwtOptions from "../utils/expressJwtConstructor";
 
 const usersRouter = express.Router();
 const saltRounds = config.get("bcryptConfig.saltRounds") as number;
@@ -19,6 +21,8 @@ usersRouter.post("/", async (req, res) => {
   const savedUser = await user.save();
   res.json(savedUser);
 });
+
+usersRouter.use(jwt(expressjwtOptions));
 
 usersRouter.get("/", async (_req, res) => {
   const users = await User.find({});

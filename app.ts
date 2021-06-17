@@ -46,9 +46,9 @@ app.get("/api/getAllStatus", async (_req, res) => {
 });
 
 app.use("/api/users", usersRouter);
+app.use("/api/login", loginRouter);
 app.use("/api/subU", subscribeUpdateRouter);
 app.use("/api/subAR", subscribeAddRemoveRouter);
-app.use("/api/login", loginRouter);
 
 app.use(errorHandler);
 

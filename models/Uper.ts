@@ -10,6 +10,7 @@ const uperSchema = new mongoose.Schema({
   follower: Number,
   videos: [{ type: mongoose.Schema.Types.ObjectId, ref: "Video" }],
   mid: String,
+  subscriber: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
 });
 
 uperSchema.set("toJSON", {

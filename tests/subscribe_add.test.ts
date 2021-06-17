@@ -1,11 +1,8 @@
 import mongoose from "mongoose";
-import supertest from "supertest";
-import app from "../app";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
 import initDB from "./helper/testdb_init";
-
-const api = supertest(app);
+import api from "./helper/apiInstance";
 
 beforeAll(async () => {
   await Uper.deleteMany();
