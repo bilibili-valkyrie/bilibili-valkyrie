@@ -53,6 +53,33 @@ describe("users login test", () => {
   });
 });
 
+describe("users delete test", () => {
+  test("would return 400 if bad request", async () => {
+    const userToDelete = {
+      fff: "root",
+      kkk: "Superuser",
+      password: "fkkkkyou",
+    };
+    await api.delete("/api/users").send(userToDelete).expect(400);
+  });
+  test("can delete user", async () => {
+    const userToDelete = {
+      username: "root",
+      name: "Superuser",
+      password: "fkkkkyou",
+    };
+    await api.delete("/api/users").send(userToDelete).expect(204);
+  });
+  test("would return 404 if not exist", async () => {
+    const userToDelete = {
+      username: "root",
+      name: "Superuser",
+      password: "fkkkkyou",
+    };
+    await api.delete("/api/users").send(userToDelete).expect(404);
+  });
+});
+
 afterAll(async () => {
   mongoose.connection.close();
 });

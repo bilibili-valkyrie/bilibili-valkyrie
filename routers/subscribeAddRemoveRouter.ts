@@ -5,8 +5,8 @@ import express from "express";
 import getUperInfo from "../api/getUperInfo";
 import getUserSpace from "../api/getUserSpace";
 import addVideos from "../controllers/addVideos";
+import deleteSubscribe from "../controllers/deleteSubscribe";
 import Uper from "../models/Uper";
-import Video from "../models/Video";
 
 require("express-async-errors");
 
@@ -31,9 +31,7 @@ subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
 });
 
 subscribeAddRemoveRouter.delete("/delSubscribe/:id", async (req, res) => {
-  const uper = await Uper.findByIdAndDelete(req.params.id);
-  if (uper === null) return res.status(204).end();
-  await Video.deleteMany({ uper: uper._id });
+  await deleteSubscribe(req.params.id, res);
   res.status(204).end();
 });
 

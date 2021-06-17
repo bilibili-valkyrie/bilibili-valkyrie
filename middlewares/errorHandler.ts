@@ -23,6 +23,8 @@ const errorHandler = (
       return response.status(404).end();
     case 409:
       return response.status(409).end();
+    case 400:
+      return response.status(400).send(error.message).end();
     default:
       break;
   }

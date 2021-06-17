@@ -33,4 +33,24 @@ usersRouter.get("/:id", async (req, res, next) => {
   res.json(user);
 });
 
+usersRouter.delete("/", async (req, res, next) => {
+  const { body } = req;
+  if (!body.username) return next({ code: 400, message: "Bad request" });
+  const user = (await User.findOne({ username: body.username })) as any;
+  if (user === null) {
+    return next({ code: 404, message: `[404] Not Found ${body.username}` });
+  }
+  const passwordCorrect =
+    user === null
+      ? false
+      : await bcrypt.compare(body.password, user.passwordHash);
+  if (!passwordCorrect) {
+    return res.status(401).json({
+      error: "invalid username or password",
+    });
+  }
+  await User.findOneAndDelete({ username: body.username });
+  res.status(204).end();
+});
+
 export default usersRouter;

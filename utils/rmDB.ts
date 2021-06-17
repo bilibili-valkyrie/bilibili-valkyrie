@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import config from "config";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
+import User from "../models/User";
 
 const databaseURL = config.get("dbConfig.URL") as string;
 
@@ -15,6 +16,7 @@ const rmDB = async () => {
   });
   await Uper.deleteMany();
   await Video.deleteMany();
+  await User.deleteMany();
   mongoose.connection.close();
 };
 
