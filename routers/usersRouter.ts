@@ -25,4 +25,12 @@ usersRouter.get("/", async (_req, res) => {
   res.json(users);
 });
 
+usersRouter.get("/:id", async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (user === null) {
+    return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
+  }
+  res.json(user);
+});
+
 export default usersRouter;

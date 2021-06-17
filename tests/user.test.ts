@@ -1,4 +1,3 @@
-import bcrypt from "bcryptjs";
 import supertest from "supertest";
 import mongoose from "mongoose";
 import app from "../app";
@@ -19,16 +18,17 @@ describe("users basic test", () => {
   });
 });
 
-describe("users add and remove test", () => {
+describe("users add test", () => {
   test("can add users", async () => {
     const newUser = {
       username: "root",
       name: "Superuser",
       password: "fkkkkyou",
     };
-    await api.post("/api/users").send(newUser).expect(200);
-    const res = await api.get("/api/users");
-    console.log(res.body);
+    const res1 = await api.post("/api/users").send(newUser).expect(200);
+    expect(res1.body).toHaveProperty("id");
+    const res2 = await api.get(`/api/users/${res1.body.id}`);
+    expect(res2.body).toHaveProperty("username", "root");
   });
 
   test("would return 409 if conflict", async () => {
@@ -38,6 +38,18 @@ describe("users add and remove test", () => {
       password: "fkkkkyou",
     };
     await api.post("/api/users").send(newUser).expect(409);
+  });
+});
+
+describe("users login test", () => {
+  test("can get token", async () => {
+    const signedUser = {
+      username: "root",
+      name: "Superuser",
+      password: "fkkkkyou",
+    };
+    const res = await api.post("/api/login").send(signedUser);
+    expect(res.body).toHaveProperty("token");
   });
 });
 

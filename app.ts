@@ -4,6 +4,7 @@ import express from "express";
 import mongoose from "mongoose";
 import errorHandler from "./middlewares/errorHandler";
 import Uper from "./models/Uper";
+import loginRouter from "./routers/loginRouter";
 import subscribeAddRemoveRouter from "./routers/subscribeAddRemoveRouter";
 import subscribeUpdateRouter from "./routers/subscribeUpdateRouter";
 import usersRouter from "./routers/usersRouter";
@@ -47,6 +48,7 @@ app.get("/api/getAllStatus", async (_req, res) => {
 app.use("/api/users", usersRouter);
 app.use("/api/subU", subscribeUpdateRouter);
 app.use("/api/subAR", subscribeAddRemoveRouter);
+app.use("/api/login", loginRouter);
 
 app.use(errorHandler);
 
