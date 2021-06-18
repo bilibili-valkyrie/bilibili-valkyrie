@@ -32,6 +32,11 @@ yarn dev
 ## 如何测试
 
 ```bash
-yarn
 yarn test
+```
+
+也可以单独运行仿真测试，该测试以模拟服务过程的思路设计，覆盖面更广。  
+
+```bash
+yarn test:sim
 ```
