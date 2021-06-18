@@ -7,6 +7,7 @@ import getUperInfo from "../api/getUperInfo";
 import getUserSpace from "../api/getUserSpace";
 import addVideos from "../controllers/addVideos";
 import deleteSubscribe from "../controllers/deleteSubscribe";
+import InvalidMidError from "../errors/InvalidMidError";
 import Uper from "../models/Uper";
 import User from "../models/User";
 
@@ -28,6 +29,8 @@ subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
       message: `[401] Unauthorized. Token was revoked`,
     });
   }
+  if (Number.isNaN(Number(req.params.mid)))
+    throw new InvalidMidError({ message: `${req.params.mid} is not valid.` });
   const getUperInfoRes = await getUperInfo(req.params.mid);
   const fmtedRes1 = {
     ...getUperInfoRes.data,

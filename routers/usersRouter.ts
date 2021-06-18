@@ -4,6 +4,8 @@ import config from "config";
 import jwt from "express-jwt";
 import User from "../models/User";
 import expressjwtOptions from "../utils/expressJwtConstructor";
+import Uper from "../models/Uper";
+import Video from "../models/Video";
 
 const usersRouter = express.Router();
 const saltRounds = config.get("bcryptConfig.saltRounds") as number;
@@ -29,10 +31,13 @@ usersRouter.get("/", async (_req, res) => {
   res.json(users);
 });
 
-usersRouter.get("/:id", async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+usersRouter.get("/:username", async (req, res, next) => {
+  const user = await User.findOne({ username: req.params.username });
   if (user === null) {
-    return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
+    return next({
+      code: 404,
+      message: `[404] Not Found ${req.params.username}`,
+    });
   }
   res.json(user);
 });
@@ -53,7 +58,11 @@ usersRouter.delete("/", async (req, res, next) => {
       error: "invalid username or password",
     });
   }
-  await User.findOneAndDelete({ username: body.username });
+  await Promise.all([
+    User.findByIdAndDelete(req.user.id),
+    Uper.deleteMany({ subscriber: req.user.id }),
+    Video.deleteMany({ subscriber: req.user.id }),
+  ]);
   res.status(204).end();
 });
 

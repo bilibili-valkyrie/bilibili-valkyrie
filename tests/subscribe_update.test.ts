@@ -24,12 +24,12 @@ describe("Subscribe update test", () => {
   test("can mark subscribe as read", async () => {
     const uperInDB = await initDB();
     const res = await api
-      .get(`/api/getStatus/${uperInDB._id}`)
+      .get(`/api/sub/getStatus/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     const firstUpdate = res.body.lastUpdate;
     await wait(1000);
     const res2 = await api
-      .put(`/api/subU/markSubscribeRead/${uperInDB._id}`)
+      .put(`/api/sub/markSubscribeRead/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     const secondUpdate = res2.body.lastUpdate;
     expect(firstUpdate === secondUpdate).toBe(false);
@@ -38,13 +38,13 @@ describe("Subscribe update test", () => {
   test("can set subscribe's lastUpdate time", async () => {
     const uperInDB = await initDB();
     const res = await api
-      .get(`/api/getStatus/${uperInDB._id}`)
+      .get(`/api/sub/getStatus/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     const firstUpdate = res.body.lastUpdate;
     await wait(1000);
     const now = Date.now();
     const res2 = await api
-      .put(`/api/subU/changeSubscribeReadTime/${uperInDB._id}`)
+      .put(`/api/sub/changeSubscribeReadTime/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
       .send({ lastUpdateJS: now });
     const secondUpdate = res2.body.lastUpdate;
@@ -55,19 +55,19 @@ describe("Subscribe update test", () => {
   test("can get updated videos", async () => {
     const uperInDB = await initDB();
     const res1 = await api
-      .get(`/api/subU/getUpdate/${uperInDB._id}`)
+      .get(`/api/sub/getUpdate/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res1.body).toStrictEqual([]);
     const res2 = await api
-      .get(`/api/getStatus/${uperInDB._id}`)
+      .get(`/api/sub/getStatus/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     const lastUpdateUnix = res2.body.videos[1].created;
     await api
-      .put(`/api/subU/changeSubscribeReadTime/${uperInDB._id}`)
+      .put(`/api/sub/changeSubscribeReadTime/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
       .send({ lastUpdateUnix });
     const res3 = await api
-      .get(`/api/subU/getUpdate/${uperInDB._id}`)
+      .get(`/api/sub/getUpdate/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res3.body.length).toBe(2);
   });
@@ -76,7 +76,7 @@ describe("Subscribe update test", () => {
     const uperInDB = await initDB();
     const firstArchiveCount = uperInDB.archive_count;
     const res1 = await api
-      .get(`/api/subU/updateVideos/${uperInDB._id}`)
+      .get(`/api/sub/updateVideos/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res1.body.updates).toBeGreaterThan(0);
     expect(res1.body.newUper.archive_count === firstArchiveCount).toBeFalsy();

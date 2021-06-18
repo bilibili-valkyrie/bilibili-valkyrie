@@ -1,14 +1,14 @@
 DELETE http://127.0.0.1:3000/api/delSubscribe/66607740 HTTP/1.1
 ###
 
-GET http://127.0.0.1:3000/api/subAR/addSubscribe/66607740 HTTP/1.1
+GET http://127.0.0.1:3000/api/sub/addSubscribe/66607740 HTTP/1.1
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjYwY2M0MjQ2NDIyZGI3ZTcxNzZjYmY5NiIsImlhdCI6MTYyMzk5OTczMH0.jw0U3bzEdtGYN5YwocCGQOxrILIrZIn4RRS0NvzK5Z0
 
 ###
-GET http://127.0.0.1:3000/api/getStatus/66607740 HTTP/1.1
+GET http://127.0.0.1:3000/api/sub/getStatus/66607740 HTTP/1.1
 
 ###
-GET http://127.0.0.1:3000/api/getAllStatus HTTP/1.1
+GET http://127.0.0.1:3000/api/sub/getAllStatus HTTP/1.1
 
 ###
 PUT http://127.0.0.1:3000/api/markSubscribeRead/66607740 HTTP/1.1

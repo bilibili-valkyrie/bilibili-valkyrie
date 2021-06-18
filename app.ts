@@ -4,9 +4,9 @@ import express from "express";
 import jwt from "express-jwt";
 import mongoose from "mongoose";
 import errorHandler from "./middlewares/errorHandler";
-import Uper from "./models/Uper";
 import loginRouter from "./routers/loginRouter";
 import subscribeAddRemoveRouter from "./routers/subscribeAddRemoveRouter";
+import subscribeGetRouter from "./routers/subscribeGetRouter";
 import subscribeUpdateRouter from "./routers/subscribeUpdateRouter";
 import usersRouter from "./routers/usersRouter";
 import expressjwtOptions from "./utils/expressJwtConstructor";
@@ -33,25 +33,12 @@ mongoose
 const app = express();
 
 app.use(express.json());
-
-app.get("/api/getStatus/:id", async (req, res, next) => {
-  const uperInDB = await Uper.findById(req.params.id).populate("videos");
-  if (uperInDB === null) {
-    return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
-  }
-  res.json(uperInDB);
-});
-
-app.get("/api/getAllStatus", async (_req, res) => {
-  const upersInDB = await Uper.find().populate("videos");
-  res.json(upersInDB);
-});
-
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use(jwt(expressjwtOptions));
-app.use("/api/subU", subscribeUpdateRouter);
-app.use("/api/subAR", subscribeAddRemoveRouter);
+app.use("/api/sub", subscribeGetRouter);
+app.use("/api/sub", subscribeUpdateRouter);
+app.use("/api/sub", subscribeAddRemoveRouter);
 
 app.use(errorHandler);
 
