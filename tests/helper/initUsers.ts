@@ -1,5 +1,5 @@
 import User from "../../models/User";
-import user from "./data/upers.json";
+import user from "./data/users.json";
 
 const initUsers = async (): Promise<any> => {
   await User.deleteMany();
