@@ -1,6 +1,76 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
+import { prop, Ref } from "@typegoose/typegoose";
 import mongoose from "mongoose";
+import { UperClass } from "./Uper";
+
+class VideoClass {
+  @prop()
+  public comment?: number;
+
+  @prop()
+  public typeid?: number;
+
+  @prop()
+  public play?: number;
+
+  @prop()
+  public pic?: string;
+
+  @prop()
+  public subtitle?: string;
+
+  @prop()
+  public description?: string;
+
+  @prop()
+  public copyright?: string;
+
+  @prop()
+  public title?: string;
+
+  @prop()
+  public review?: number;
+
+  @prop()
+  public author?: string;
+
+  @prop()
+  public mid?: number;
+
+  @prop()
+  public created?: number;
+
+  @prop()
+  public length?: string;
+
+  @prop()
+  public video_review?: number;
+
+  @prop()
+  public aid?: number;
+
+  @prop()
+  public bvid?: string;
+
+  @prop()
+  public hide_click?: boolean;
+
+  @prop()
+  public is_pay?: number;
+
+  @prop()
+  public is_union_video?: number;
+
+  @prop()
+  public is_steins_gate?: number;
+
+  @prop()
+  public is_live_playback?: number;
+
+  @prop({ ref: () => UperClass })
+  public uper?: Ref<UperClass>;
+}
 
 const videoSchema = new mongoose.Schema({
   uper: { type: mongoose.Schema.Types.ObjectId, ref: "Uper" },
