@@ -1,6 +1,7 @@
 /* eslint-disable consistent-return */
 import config from "config";
 import express from "express";
+import jwt from "express-jwt";
 import mongoose from "mongoose";
 import errorHandler from "./middlewares/errorHandler";
 import Uper from "./models/Uper";
@@ -8,6 +9,7 @@ import loginRouter from "./routers/loginRouter";
 import subscribeAddRemoveRouter from "./routers/subscribeAddRemoveRouter";
 import subscribeUpdateRouter from "./routers/subscribeUpdateRouter";
 import usersRouter from "./routers/usersRouter";
+import expressjwtOptions from "./utils/expressJwtConstructor";
 import logger from "./utils/logger";
 
 const databaseURL = config.get("dbConfig.URL") as string;
@@ -47,6 +49,7 @@ app.get("/api/getAllStatus", async (_req, res) => {
 
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
+app.use(jwt(expressjwtOptions));
 app.use("/api/subU", subscribeUpdateRouter);
 app.use("/api/subAR", subscribeAddRemoveRouter);
 
