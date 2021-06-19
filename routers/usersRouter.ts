@@ -21,7 +21,7 @@ usersRouter.post("/", async (req, res) => {
     passwordHash,
   });
   const savedUser = await user.save();
-  res.json(savedUser);
+  res.status(201).json(savedUser);
 });
 
 usersRouter.use(jwt(expressjwtOptions));
@@ -40,6 +40,31 @@ usersRouter.get("/:username", async (req, res, next) => {
     });
   }
   res.json(user);
+});
+
+usersRouter.put("/", async (req, res, next) => {
+  const { body } = req;
+  const user = (await User.findById(req.user.id)) as any;
+  if (user === null) {
+    return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
+  }
+  const passwordCorrect =
+    user === null
+      ? false
+      : await bcrypt.compare(body.oldPassword, user.passwordHash);
+  if (!passwordCorrect) {
+    return res.status(401).json({
+      error: "invalid username or password",
+    });
+  }
+  const passwordHash = await bcrypt.hash(body.newPassword, saltRounds);
+  const savedUser = await User.findByIdAndUpdate(req.user.id, {
+    username: body.username ? body.username : user.name,
+    name: body.name ? body.name : user.name,
+    passwordHash,
+    tokenRevoked: true,
+  });
+  res.json(savedUser);
 });
 
 usersRouter.delete("/", async (req, res, next) => {

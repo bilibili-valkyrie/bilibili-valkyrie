@@ -23,9 +23,9 @@ beforeAll(async () => {
 
 describe("user sign up test", () => {
   test("user can sign up", async () => {
-    const res = await api.post("/api/users").send(userUsedForTest).expect(200);
-    expect(res.body).toHaveProperty("id");
-    await api.post("/api/users").send(user2).expect(200);
+    const res = await api.post("/api/users").send(userUsedForTest).expect(201);
+    expect(res.body).toHaveProperty("username");
+    await api.post("/api/users").send(user2).expect(201);
   });
 
   test("would return 409 if username already exist", async () => {
@@ -65,7 +65,8 @@ describe("subscribing test", () => {
   test("can add subscribe", async () => {
     const res = await api
       .get("/api/sub/addSubscribe/66607740")
-      .set("authorization", `bearer ${tokenStorage.token}`);
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(201);
     expect(res.body.card.mid).toBe("66607740");
     expect(res.body.card.name).toBe("宋浩老师官方");
 
@@ -177,7 +178,7 @@ describe("user and subscribe delete test", () => {
     const res2 = await api
       .get("/api/sub/addSubscribe/66607740")
       .set("authorization", `bearer ${tokenStorage.token}`);
-    expect(res2.statusCode).toBe(200);
+    expect(res2.statusCode).toBe(201);
   });
 
   test("user can write off", async () => {
@@ -209,6 +210,59 @@ describe("user and subscribe delete test", () => {
       .get(`/api/users`)
       .set("authorization", `bearer ${tokenStorage.token}`)
       .expect(401);
+  });
+});
+
+describe("user modify test", () => {
+  test("user can modify their username", async () => {
+    await api
+      .put("/api/users")
+      .set("authorization", `bearer ${userToken2}`)
+      .send({
+        username: "XuYi",
+        oldPassword: user2.password,
+        newPassword: userUsedForTest.password,
+      })
+      .expect(200);
+    const usersInDB = await dbRWhelper.usersInDB();
+    expect(usersInDB[0]).toHaveProperty("username", "XuYi");
+  });
+
+  test("should not able to use old token after modifying info", async () => {
+    const usersInDB = await dbRWhelper.usersInDB();
+    expect(usersInDB[0].tokenRevoked).toBe(true);
+    await api
+      .get(`/api/users`)
+      .set("authorization", `bearer ${userToken2}`)
+      .expect(401);
+  });
+
+  test("can login with new info", async () => {
+    const res = await api
+      .post("/api/login")
+      .send({ username: "XuYi", password: userUsedForTest.password })
+      .expect(200);
+    userToken2 = res.body.token;
+  });
+
+  test("cannot use old token after revoking token", async () => {
+    await api
+      .get("/api/login/revokeToken")
+      .set("authorization", `bearer ${userToken2}`)
+      .expect(200);
+    await api
+      .get(`/api/users`)
+      .set("authorization", `bearer ${userToken2}`)
+      .expect(401);
+  });
+
+  test("can login again after old token was revoked", async () => {
+    const res = await api
+      .post("/api/login")
+      .send({ username: "XuYi", password: userUsedForTest.password })
+      .expect(200);
+    expect(res.body).toHaveProperty("token");
+    userToken2 = res.body.token;
   });
 });
 

@@ -10,8 +10,8 @@ beforeAll(async () => {
 
 describe("users add test", () => {
   test("can add users", async () => {
-    const res1 = await api.post("/api/users").send(userUsedForTest).expect(200);
-    expect(res1.body).toHaveProperty("id");
+    const res1 = await api.post("/api/users").send(userUsedForTest).expect(201);
+    expect(res1.body).toHaveProperty("username");
     const res2 = await api.post("/api/login").send(userUsedForTest);
     tokenStorage.setToken(res2.body.token);
     const res3 = await api
