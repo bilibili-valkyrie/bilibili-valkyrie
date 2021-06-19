@@ -30,10 +30,8 @@ loginRouter.post("/", async (req, res) => {
   const userForToken = {
     username: user.username,
     id: user._id,
+    iat: Date.now(),
   };
-
-  user.tokenRevoked = false;
-  await user.save();
 
   const token = jwt.sign(userForToken, SECRET);
 
@@ -43,7 +41,9 @@ loginRouter.post("/", async (req, res) => {
 loginRouter.use(expressJwt(expressjwtOptions));
 
 loginRouter.get("/revokeToken", async (req, res) => {
-  await User.findByIdAndUpdate(req.user.id, { tokenRevoked: true });
+  await User.findByIdAndUpdate(req.user.id, {
+    tokenLastRevokedTime: Date.now(),
+  });
   res.status(200).end();
 });
 

@@ -6,7 +6,7 @@ export interface UserAsJSON {
   subscribing: string[];
   username: string;
   name: string;
-  tokenRevoked: boolean;
+  tokenLastRevokedTime: number;
 }
 
 const userSchema = new mongoose.Schema({
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, unique: true },
   name: String,
   passwordHash: String,
-  tokenRevoked: Boolean,
+  tokenLastRevokedTime: Number,
 });
 
 userSchema.plugin(uniqueValidator);

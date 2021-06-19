@@ -215,6 +215,8 @@ describe("user and subscribe delete test", () => {
 
 describe("user modify test", () => {
   test("user can modify their username", async () => {
+    let usersInDB = await dbRWhelper.usersInDB();
+    const tlrt1 = usersInDB[0].tokenLastRevokedTime;
     await api
       .put("/api/users")
       .set("authorization", `bearer ${userToken2}`)
@@ -224,13 +226,13 @@ describe("user modify test", () => {
         newPassword: userUsedForTest.password,
       })
       .expect(200);
-    const usersInDB = await dbRWhelper.usersInDB();
+    usersInDB = await dbRWhelper.usersInDB();
+    const tlrt2 = usersInDB[0].tokenLastRevokedTime;
+    expect(tlrt1).toBeLessThan(tlrt2);
     expect(usersInDB[0]).toHaveProperty("username", "XuYi");
   });
 
   test("should not able to use old token after modifying info", async () => {
-    const usersInDB = await dbRWhelper.usersInDB();
-    expect(usersInDB[0].tokenRevoked).toBe(true);
     await api
       .get(`/api/users`)
       .set("authorization", `bearer ${userToken2}`)

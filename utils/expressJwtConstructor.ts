@@ -10,7 +10,7 @@ const tokenChecker = async (
   done: any
 ) => {
   const userInDB = (await User.findById(payload.id)) as any;
-  if (userInDB === null || userInDB.tokenRevoked === true) {
+  if (userInDB === null || userInDB.tokenLastRevokedTime > payload.iat) {
     logger.error(payload.id);
     return done(
       new UnauthorizedError("revoked_token", {

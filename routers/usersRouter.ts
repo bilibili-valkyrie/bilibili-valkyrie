@@ -19,6 +19,7 @@ usersRouter.post("/", async (req, res) => {
     username: body.username,
     name: body.name,
     passwordHash,
+    tokenLastRevokedTime: Date.now(),
   });
   const savedUser = await user.save();
   res.status(201).json(savedUser);
@@ -62,7 +63,7 @@ usersRouter.put("/", async (req, res, next) => {
     username: body.username ? body.username : user.name,
     name: body.name ? body.name : user.name,
     passwordHash,
-    tokenRevoked: true,
+    tokenLastRevokedTime: Date.now(),
   });
   res.json(savedUser);
 });
