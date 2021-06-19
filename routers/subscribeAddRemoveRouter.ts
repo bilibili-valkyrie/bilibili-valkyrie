@@ -2,7 +2,6 @@
 /* eslint-disable consistent-return */
 import { getUnixTime } from "date-fns";
 import express from "express";
-import { UnauthorizedError } from "express-jwt";
 import getUperInfo from "../api/getUperInfo";
 import getUserSpace from "../api/getUserSpace";
 import addVideos from "../controllers/addVideos";
@@ -23,11 +22,6 @@ subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
   const userInDB = (await User.findById(req.user.id)) as any;
   if (uperInDB !== null) {
     return next({ code: 409, message: `[409] Conflict ${req.params.mid}` });
-  }
-  if (userInDB === null) {
-    throw new UnauthorizedError("revoked_token", {
-      message: `[401] Unauthorized. Token was revoked`,
-    });
   }
   if (Number.isNaN(Number(req.params.mid)))
     throw new InvalidMidError({ message: `${req.params.mid} is not valid.` });

@@ -38,37 +38,6 @@ describe("users login test", () => {
   });
 });
 
-describe("users delete test", () => {
-  test("would return 400 if bad request", async () => {
-    const userToDelete = {
-      fff: "root",
-      kkk: "Superuser",
-      password: "fkkkkyou",
-    };
-    await api
-      .delete("/api/users")
-      .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
-      .expect(400);
-  });
-  test("can delete user", async () => {
-    const userToDelete = userUsedForTest;
-    await api
-      .delete("/api/users")
-      .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
-      .expect(204);
-  });
-  test("would return 404 if not exist", async () => {
-    const userToDelete = userUsedForTest;
-    await api
-      .delete("/api/users")
-      .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
-      .expect(404);
-  });
-});
-
 describe("users basic test", () => {
   test("users are returned as json", async () => {
     await api
@@ -76,6 +45,26 @@ describe("users basic test", () => {
       .set("authorization", `bearer ${tokenStorage.token}`)
       .expect(200)
       .expect("Content-Type", /application\/json/);
+  });
+});
+
+describe("users delete test", () => {
+  test("would return 401 if password not match", async () => {
+    const userToDelete = { password: "gggfff" };
+    await api
+      .delete("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send(userToDelete)
+      .expect(401);
+  });
+
+  test("can delete user", async () => {
+    const userToDelete = { password: userUsedForTest.password };
+    await api
+      .delete("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send(userToDelete)
+      .expect(204);
   });
 });
 

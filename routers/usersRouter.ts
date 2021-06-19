@@ -44,10 +44,9 @@ usersRouter.get("/:username", async (req, res, next) => {
 
 usersRouter.delete("/", async (req, res, next) => {
   const { body } = req;
-  if (!body.username) return next({ code: 400, message: "Bad request" });
-  const user = (await User.findOne({ username: body.username })) as any;
+  const user = (await User.findOne({ username: req.user.username })) as any;
   if (user === null) {
-    return next({ code: 404, message: `[404] Not Found ${body.username}` });
+    return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
   }
   const passwordCorrect =
     user === null

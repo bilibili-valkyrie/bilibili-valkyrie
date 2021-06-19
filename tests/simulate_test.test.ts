@@ -77,6 +77,7 @@ describe("subscribing test", () => {
     expect(res2.body.card.name).toBe("宋浩老师官方");
   });
 
+  // 同一个用户当然不应该能重复订阅同一个up主
   test("should return 409 if conflict", async () => {
     const res = await api
       .get("/api/sub/addSubscribe/66607740")
@@ -186,11 +187,10 @@ describe("user and subscribe delete test", () => {
     expect(upersBeforeWriteOff.length).toBe(2);
     const videosBeforeWriteOff = await dbRWhelper.videosInDB();
     expect(videosBeforeWriteOff.length).toBe(60);
-    const userToDelete = userUsedForTest;
     await api
       .delete("/api/users")
       .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
+      .send({ password: userUsedForTest.password })
       .expect(204);
     const usersAfterWriteOff = await dbRWhelper.usersInDB();
     expect(usersAfterWriteOff.length).toBe(1);
@@ -204,7 +204,6 @@ describe("user and subscribe delete test", () => {
     await api.post("/api/login").send(userUsedForTest).expect(401);
   });
 
-  // would fail for now.
   test("should not able to use old token after write off", async () => {
     await api
       .get(`/api/users`)
