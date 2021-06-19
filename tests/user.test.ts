@@ -1,3 +1,4 @@
+import { Base64 } from "js-base64";
 import mongoose from "mongoose";
 import User from "../models/User";
 import api from "./helper/apiInstance";
@@ -52,18 +53,16 @@ describe("users delete test", () => {
   test("would return 401 if password not match", async () => {
     const userToDelete = { password: "gggfff" };
     await api
-      .delete("/api/users")
+      .delete(`/api/users?paword=${Base64.encode(userToDelete.password)}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
       .expect(401);
   });
 
   test("can delete user", async () => {
     const userToDelete = { password: userUsedForTest.password };
     await api
-      .delete("/api/users")
+      .delete(`/api/users?paword=${Base64.encode(userToDelete.password)}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
       .expect(204);
   });
 });

@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import express from "express";
 import config from "config";
+import { Base64 } from "js-base64";
 import jwt from "express-jwt";
 import User from "../models/User";
 import expressjwtOptions from "../utils/expressJwtConstructor";
@@ -69,7 +70,11 @@ usersRouter.put("/", async (req, res, next) => {
 });
 
 usersRouter.delete("/", async (req, res, next) => {
-  const { body } = req;
+  const password64 = req.query.paword;
+  if (typeof password64 !== "string") {
+    return next({ code: 400, message: "[400] invalid password" });
+  }
+  const userPassword = Base64.decode(password64);
   const user = (await User.findOne({ username: req.user.username })) as any;
   if (user === null) {
     return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
@@ -77,7 +82,7 @@ usersRouter.delete("/", async (req, res, next) => {
   const passwordCorrect =
     user === null
       ? false
-      : await bcrypt.compare(body.password, user.passwordHash);
+      : await bcrypt.compare(userPassword, user.passwordHash);
   if (!passwordCorrect) {
     return res.status(401).json({
       error: "invalid username or password",

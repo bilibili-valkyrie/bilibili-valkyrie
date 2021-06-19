@@ -1,4 +1,5 @@
 import { getUnixTime } from "date-fns";
+import { Base64 } from "js-base64";
 import mongoose from "mongoose";
 import Uper from "../models/Uper";
 import User from "../models/User";
@@ -189,9 +190,8 @@ describe("user and subscribe delete test", () => {
     const videosBeforeWriteOff = await dbRWhelper.videosInDB();
     expect(videosBeforeWriteOff.length).toBe(60);
     await api
-      .delete("/api/users")
+      .delete(`/api/users?paword=${Base64.encode(userUsedForTest.password)}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
-      .send({ password: userUsedForTest.password })
       .expect(204);
     const usersAfterWriteOff = await dbRWhelper.usersInDB();
     expect(usersAfterWriteOff.length).toBe(1);
