@@ -1,4 +1,5 @@
 import axios from "axios";
+import InvalidMidError from "../errors/InvalidMidError";
 
 export interface GetUperInfoResData {
   card: {
@@ -98,6 +99,8 @@ const getUperInfo = async (mid: number | string): Promise<GetUperInfoRes> => {
       },
     }
   );
+  if (res.data.code !== 0)
+    throw new InvalidMidError({ message: `${mid} is not valid.` });
   return res.data;
 };
 export default getUperInfo;

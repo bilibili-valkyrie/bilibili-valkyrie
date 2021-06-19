@@ -8,6 +8,7 @@
     "prestart": "tsc",
     "dev": "cross-env NODE_ENV=development ts-node-dev index.ts",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles",
+    "test:sim": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles tests/simulate_test.test.ts",
     "tsc": "tsc",
     "rmDB:test": "cross-env NODE_ENV=test ts-node utils/rmDB.ts",
     "lint": "eslint ."
@@ -32,7 +33,6 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/config": "^0.0.38",
     "@types/express": "^4.17.12",
-    "@types/express-jwt": "^6.0.1",
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/lodash": "^4.14.170",

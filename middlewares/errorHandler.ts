@@ -13,6 +13,9 @@ const errorHandler = (
   if (error.name === "CastError" && error.kind === "ObjectId") {
     return response.status(400).send({ error: "malformatted id" });
   }
+  if (error.name === "InvalidMidError") {
+    return response.status(400).send(error.message).end();
+  }
   if (error.errors && error.errors.username.kind === "unique")
     return response.status(409).end();
 
@@ -25,6 +28,8 @@ const errorHandler = (
       return response.status(409).end();
     case 400:
       return response.status(400).send(error.message).end();
+    case "revoked_token":
+      return response.status(401).send(error.inner.message).end();
     default:
       break;
   }
