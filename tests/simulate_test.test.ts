@@ -182,6 +182,10 @@ describe("user and subscribe delete test", () => {
   test("user can write off", async () => {
     const usersBeforeWriteOff = await dbRWhelper.usersInDB();
     expect(usersBeforeWriteOff.length).toBe(2);
+    const upersBeforeWriteOff = await dbRWhelper.upersInDB();
+    expect(upersBeforeWriteOff.length).toBe(2);
+    const videosBeforeWriteOff = await dbRWhelper.videosInDB();
+    expect(videosBeforeWriteOff.length).toBe(60);
     const userToDelete = userUsedForTest;
     await api
       .delete("/api/users")
@@ -190,6 +194,22 @@ describe("user and subscribe delete test", () => {
       .expect(204);
     const usersAfterWriteOff = await dbRWhelper.usersInDB();
     expect(usersAfterWriteOff.length).toBe(1);
+    const upersAfterWriteOff = await dbRWhelper.upersInDB();
+    expect(upersAfterWriteOff.length).toBe(1);
+    const videosAfterWriteOff = await dbRWhelper.videosInDB();
+    expect(videosAfterWriteOff.length).toBe(30);
+  });
+
+  test("should not able to login after write off", async () => {
+    await api.post("/api/login").send(userUsedForTest).expect(401);
+  });
+
+  // would fail for now.
+  test("should not able to use old token after write off", async () => {
+    await api
+      .get(`/api/users`)
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(401);
   });
 });
 
