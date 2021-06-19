@@ -38,7 +38,7 @@ subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
   const dbRes2 = await addVideos(getUserSpaceRes.list.vlist, newUper);
   userInDB.subscribing = userInDB.subscribing.concat(newUper._id);
   await userInDB.save();
-  res.json(dbRes2);
+  res.status(201).json(dbRes2);
 });
 
 subscribeAddRemoveRouter.delete("/delSubscribe/:id", async (req, res) => {
