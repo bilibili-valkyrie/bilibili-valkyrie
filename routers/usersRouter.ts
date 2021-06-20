@@ -59,7 +59,12 @@ usersRouter.put("/", async (req, res, next) => {
       error: "invalid username or password",
     });
   }
-  const passwordHash = await bcrypt.hash(body.newPassword, saltRounds);
+  let passwordHash: string;
+  if (body.newPassword) {
+    passwordHash = await bcrypt.hash(body.newPassword, saltRounds);
+  } else {
+    passwordHash = user.passwordHash;
+  }
   const savedUser = await User.findByIdAndUpdate(req.user.id, {
     username: body.username ? body.username : user.name,
     name: body.name ? body.name : user.name,

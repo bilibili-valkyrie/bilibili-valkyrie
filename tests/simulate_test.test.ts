@@ -54,6 +54,21 @@ describe("user login test", () => {
   });
 });
 
+describe("get user test", () => {
+  test("can get all users", async () => {
+    await api
+      .get("/api/users")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(200);
+  });
+  test("can get a user", async () => {
+    await api
+      .get(`/api/users/${userUsedForTest.username}`)
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(200);
+  });
+});
+
 describe("subscribing test", () => {
   test("status is returned as json", async () => {
     await api
