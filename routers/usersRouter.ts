@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import express from "express";
 import config from "config";
+import { Base64 } from "js-base64";
 import jwt from "express-jwt";
 import User from "../models/User";
 import expressjwtOptions from "../utils/expressJwtConstructor";
@@ -19,9 +20,10 @@ usersRouter.post("/", async (req, res) => {
     username: body.username,
     name: body.name,
     passwordHash,
+    tokenLastRevokedTime: Date.now(),
   });
   const savedUser = await user.save();
-  res.json(savedUser);
+  res.status(201).json(savedUser);
 });
 
 usersRouter.use(jwt(expressjwtOptions));
@@ -42,8 +44,42 @@ usersRouter.get("/:username", async (req, res, next) => {
   res.json(user);
 });
 
-usersRouter.delete("/", async (req, res, next) => {
+usersRouter.put("/", async (req, res, next) => {
   const { body } = req;
+  const user = (await User.findById(req.user.id)) as any;
+  if (user === null) {
+    return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
+  }
+  const passwordCorrect =
+    user === null
+      ? false
+      : await bcrypt.compare(body.oldPassword, user.passwordHash);
+  if (!passwordCorrect) {
+    return res.status(401).json({
+      error: "invalid username or password",
+    });
+  }
+  let passwordHash: string;
+  if (body.newPassword) {
+    passwordHash = await bcrypt.hash(body.newPassword, saltRounds);
+  } else {
+    passwordHash = user.passwordHash;
+  }
+  const savedUser = await User.findByIdAndUpdate(req.user.id, {
+    username: body.username ? body.username : user.name,
+    name: body.name ? body.name : user.name,
+    passwordHash,
+    tokenLastRevokedTime: Date.now(),
+  });
+  res.json(savedUser);
+});
+
+usersRouter.delete("/", async (req, res, next) => {
+  const password64 = req.query.paword;
+  if (typeof password64 !== "string") {
+    return next({ code: 400, message: "[400] invalid password" });
+  }
+  const userPassword = Base64.decode(password64);
   const user = (await User.findOne({ username: req.user.username })) as any;
   if (user === null) {
     return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
@@ -51,7 +87,7 @@ usersRouter.delete("/", async (req, res, next) => {
   const passwordCorrect =
     user === null
       ? false
-      : await bcrypt.compare(body.password, user.passwordHash);
+      : await bcrypt.compare(userPassword, user.passwordHash);
   if (!passwordCorrect) {
     return res.status(401).json({
       error: "invalid username or password",

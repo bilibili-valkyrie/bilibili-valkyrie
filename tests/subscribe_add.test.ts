@@ -31,7 +31,8 @@ describe("Subscribe basic test", () => {
   test("can add subscribe", async () => {
     const res = await api
       .get("/api/sub/addSubscribe/66607740")
-      .set("authorization", `bearer ${tokenStorage.token}`);
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(201);
     expect(res.body.card.mid).toBe("66607740");
     expect(res.body.card.name).toBe("宋浩老师官方");
   });
@@ -52,7 +53,7 @@ describe("Subscribe basic test", () => {
     const res = await api
       .get("/api/sub/addSubscribe/66607740")
       .set("authorization", `bearer ${tokenStorage.token}`);
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(201);
   });
 });
 

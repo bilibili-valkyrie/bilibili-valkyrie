@@ -1,3 +1,4 @@
+import { Base64 } from "js-base64";
 import mongoose from "mongoose";
 import User from "../models/User";
 import api from "./helper/apiInstance";
@@ -10,8 +11,8 @@ beforeAll(async () => {
 
 describe("users add test", () => {
   test("can add users", async () => {
-    const res1 = await api.post("/api/users").send(userUsedForTest).expect(200);
-    expect(res1.body).toHaveProperty("id");
+    const res1 = await api.post("/api/users").send(userUsedForTest).expect(201);
+    expect(res1.body).toHaveProperty("username");
     const res2 = await api.post("/api/login").send(userUsedForTest);
     tokenStorage.setToken(res2.body.token);
     const res3 = await api
@@ -52,18 +53,16 @@ describe("users delete test", () => {
   test("would return 401 if password not match", async () => {
     const userToDelete = { password: "gggfff" };
     await api
-      .delete("/api/users")
+      .delete(`/api/users?paword=${Base64.encode(userToDelete.password)}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
       .expect(401);
   });
 
   test("can delete user", async () => {
     const userToDelete = { password: userUsedForTest.password };
     await api
-      .delete("/api/users")
+      .delete(`/api/users?paword=${Base64.encode(userToDelete.password)}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
-      .send(userToDelete)
       .expect(204);
   });
 });

@@ -1,8 +1,10 @@
 import jwt from "jsonwebtoken";
+import expressJwt from "express-jwt";
 import bcrypt from "bcryptjs";
 import express from "express";
 import config from "config";
 import User from "../models/User";
+import expressjwtOptions from "../utils/expressJwtConstructor";
 
 require("express-async-errors");
 
@@ -28,11 +30,21 @@ loginRouter.post("/", async (req, res) => {
   const userForToken = {
     username: user.username,
     id: user._id,
+    iat: Date.now(),
   };
 
   const token = jwt.sign(userForToken, SECRET);
 
   res.status(200).send({ token, username: user.username, name: user.name });
+});
+
+loginRouter.use(expressJwt(expressjwtOptions));
+
+loginRouter.get("/revokeToken", async (req, res) => {
+  await User.findByIdAndUpdate(req.user.id, {
+    tokenLastRevokedTime: Date.now(),
+  });
+  res.status(200).end();
 });
 
 export default loginRouter;
