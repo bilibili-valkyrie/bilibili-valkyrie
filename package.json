@@ -11,6 +11,8 @@
     "test:sim": "cross-env NODE_ENV=test jest --verbose --runInBand --detectOpenHandles tests/simulate_test.test.ts",
     "tsc": "tsc",
     "rmDB:test": "cross-env NODE_ENV=test ts-node utils/rmDB.ts",
+    "rmDB:dev": "cross-env NODE_ENV=development ts-node utils/rmDB.ts",
+    "rmDB:production": "cross-env NODE_ENV=production ts-node utils/rmDB.ts",
     "lint": "eslint ."
   },
   "license": "GPL-3.0",
