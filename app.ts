@@ -1,5 +1,6 @@
 /* eslint-disable consistent-return */
 import config from "config";
+import cors from "cors";
 import express from "express";
 import jwt from "express-jwt";
 import mongoose from "mongoose";
@@ -32,6 +33,7 @@ mongoose
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
