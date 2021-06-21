@@ -7,6 +7,7 @@ import User from "../models/User";
 import expressjwtOptions from "../utils/expressJwtConstructor";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
+import NotAllowedToSignUpError from "../errors/NotAllowedToSignUpError";
 
 const usersRouter = express.Router();
 const saltRounds = config.get("bcryptConfig.saltRounds") as number;
@@ -14,6 +15,9 @@ const saltRounds = config.get("bcryptConfig.saltRounds") as number;
 require("express-async-errors");
 
 usersRouter.post("/", async (req, res) => {
+  const allowSignUp = config.get("allowSignUp") as boolean;
+  if (!allowSignUp)
+    throw new NotAllowedToSignUpError("[401] Not allowed to sign up");
   const { body } = req;
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
   const user = new User({

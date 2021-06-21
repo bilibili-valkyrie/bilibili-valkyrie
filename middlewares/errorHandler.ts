@@ -13,9 +13,16 @@ const errorHandler = (
   if (error.name === "CastError" && error.kind === "ObjectId") {
     return response.status(400).send({ error: "malformatted id" });
   }
-  if (error.name === "InvalidMidError") {
-    return response.status(400).send(error.message).end();
+
+  switch (error.name) {
+    case "InvalidMidError":
+      return response.status(400).send(error.message).end();
+    case "NotAllowedToSignUpError":
+      return response.status(401).send(error.message).end();
+    default:
+      break;
   }
+
   if (error.errors && error.errors.username.kind === "unique")
     return response.status(409).end();
 

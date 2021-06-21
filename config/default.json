@@ -6,5 +6,6 @@
   "bcryptConfig": {
     "saltRounds": 10
   },
-  "jwtSecrets": "FkYouChenRui"
+  "jwtSecrets": "FkYouChenRui",
+  "allowSignUp": true
 }
