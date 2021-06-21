@@ -74,12 +74,10 @@ describe("Subscribe update test", () => {
 
   test("can update uper's videos", async () => {
     const uperInDB = await initDB();
-    const firstArchiveCount = uperInDB.archive_count;
     const res1 = await api
       .get(`/api/sub/updateVideos/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res1.body.updates).toBeGreaterThan(0);
-    expect(res1.body.newUper.archive_count === firstArchiveCount).toBeFalsy();
   });
 });
 

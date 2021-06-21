@@ -1,6 +1,6 @@
 {
   "dbConfig": {
-    "URL": "mongodb://localhost:27017/valkyrie-test"
+    "URL": "mongodb://localhost:27017/valkyrie"
   },
   "port": 3000,
   "bcryptConfig": {
