@@ -43,7 +43,8 @@ subscribeUpdateRouter.get("/getUpdate/:id", async (req, res, next) => {
   }
   const newVideos = await Video.find()
     .where("uper", req.params.id)
-    .gte("created", uperInDB.lastUpdate);
+    .gte("created", uperInDB.lastUpdate)
+    .populate("videos");
   res.json(newVideos);
 });
 
@@ -55,14 +56,14 @@ subscribeUpdateRouter.get("/updateVideos/:id", async (req, res, next) => {
   const getUperInfoRes = await getUperInfo(uperInDB.mid);
   const getUperInfoResData = getUperInfoRes.data;
   if (getUperInfoResData.archive_count === uperInDB.archive_count) {
-    const noUpdateRes = { id: uperInDB._id, updates: 0 };
+    const noUpdateRes = { updates: 0 };
     return res.json(noUpdateRes);
   }
   const updateCount = getUperInfoResData.archive_count - uperInDB.archive_count;
   const getUserSpaceRes = await getUserSpace(uperInDB.mid);
   uperInDB.archive_count = getUperInfoResData.archive_count;
-  const savedUper = await addVideos(getUserSpaceRes.list.vlist, uperInDB);
-  res.json({ newUper: savedUper, updates: updateCount });
+  await addVideos(getUserSpaceRes.list.vlist, uperInDB);
+  res.json({ updates: updateCount });
 });
 
 export default subscribeUpdateRouter;
