@@ -4,7 +4,7 @@
 /* eslint-disable no-restricted-syntax */
 import lodash from "lodash";
 import Video from "../models/Video";
-import { VlistType } from "../api/getUserSpace";
+import { VlistType } from "../api/getUperSpace";
 
 const addVideos = async (
   vlist: VlistType[],

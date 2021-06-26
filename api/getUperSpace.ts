@@ -47,7 +47,7 @@ export interface VlistType {
   is_live_playback: number;
 }
 
-const getUserSpace = async (
+const getUperSpace = async (
   mid: number | string,
   pn = 1,
   ps = 30
@@ -64,4 +64,4 @@ const getUserSpace = async (
   return data.data;
 };
 
-export default getUserSpace;
+export default getUperSpace;

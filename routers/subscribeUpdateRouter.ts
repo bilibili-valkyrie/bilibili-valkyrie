@@ -2,7 +2,7 @@
 import { getUnixTime } from "date-fns";
 import express from "express";
 import getUperInfo from "../api/getUperInfo";
-import getUserSpace from "../api/getUserSpace";
+import getUperSpace from "../api/getUperSpace";
 import addVideos from "../controllers/addVideos";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
@@ -60,9 +60,9 @@ subscribeUpdateRouter.get("/updateVideos/:id", async (req, res, next) => {
     return res.json(noUpdateRes);
   }
   const updateCount = getUperInfoResData.archive_count - uperInDB.archive_count;
-  const getUserSpaceRes = await getUserSpace(uperInDB.mid);
+  const getUperSpaceRes = await getUperSpace(uperInDB.mid);
   uperInDB.archive_count = getUperInfoResData.archive_count;
-  await addVideos(getUserSpaceRes.list.vlist, uperInDB);
+  await addVideos(getUperSpaceRes.list.vlist, uperInDB);
   res.json({ updates: updateCount });
 });
 

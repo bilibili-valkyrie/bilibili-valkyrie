@@ -3,7 +3,7 @@
 import { getUnixTime } from "date-fns";
 import express from "express";
 import getUperInfo from "../api/getUperInfo";
-import getUserSpace from "../api/getUserSpace";
+import getUperSpace from "../api/getUperSpace";
 import addVideos from "../controllers/addVideos";
 import deleteSubscribe from "../controllers/deleteSubscribe";
 import InvalidMidError from "../errors/InvalidMidError";
@@ -33,9 +33,9 @@ subscribeAddRemoveRouter.get("/addSubscribe/:mid", async (req, res, next) => {
     lastUpdate: getUnixTime(Date.now()),
   };
   const newUper = new Uper(fmtedRes1);
-  const getUserSpaceRes = await getUserSpace(req.params.mid);
+  const getUperSpaceRes = await getUperSpace(req.params.mid);
   await newUper.save();
-  const dbRes2 = await addVideos(getUserSpaceRes.list.vlist, newUper);
+  const dbRes2 = await addVideos(getUperSpaceRes.list.vlist, newUper);
   userInDB.subscribing = userInDB.subscribing.concat(newUper._id);
   await userInDB.save();
   res.status(201).json(dbRes2);
