@@ -37,7 +37,7 @@
     "@types/config": "^0.0.38",
     "@types/cors": "^2.8.10",
     "@types/express": "^4.17.12",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.24",
     "@types/jsonwebtoken": "^8.5.3",
     "@types/lodash": "^4.14.170",
     "@types/mongoose-unique-validator": "^1.0.5",
