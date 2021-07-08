@@ -1,12 +1,28 @@
 /* eslint-disable no-param-reassign */
+import { getModelForClass, plugin, prop, Ref } from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
+import { UperClass } from "./Uper";
 
 export interface UserAsJSON {
   subscribing: string[];
   username: string;
   name: string;
   tokenLastRevokedTime: number;
+}
+
+export class UserClass {
+  @prop({ type: () => UperClass })
+  public subscribing?: Ref<UperClass>[];
+
+  @prop({ unique: true })
+  public username?: string;
+
+  @prop()
+  public name?: string;
+
+  @prop()
+  public passwordHash?: string;
 }
 
 const userSchema = new mongoose.Schema({
