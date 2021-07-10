@@ -43,8 +43,7 @@ subscribeUpdateRouter.get("/getUpdate/:id", async (req, res, next) => {
   }
   const newVideos = await Video.find()
     .where("uper", req.params.id)
-    .gte("created", uperInDB.lastUpdate)
-    .populate("videos");
+    .gte("created", uperInDB.lastUpdate);
   res.json(newVideos);
 });
 
