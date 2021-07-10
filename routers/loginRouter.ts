@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import jwt from "jsonwebtoken";
 import expressJwt from "express-jwt";
 import bcrypt from "bcryptjs";
@@ -14,9 +15,9 @@ const loginRouter = express.Router();
 loginRouter.post("/", async (req, res) => {
   const { body } = req;
 
-  const user = (await User.findOne({
+  const user = await User.findOne({
     username: body.username,
-  })) as unknown as any;
+  });
   const passwordCorrect =
     user === null
       ? false
@@ -28,14 +29,14 @@ loginRouter.post("/", async (req, res) => {
   }
 
   const userForToken = {
-    username: user.username,
-    id: user._id,
+    username: user!.username,
+    id: user!._id,
     iat: Date.now(),
   };
 
   const token = jwt.sign(userForToken, SECRET);
 
-  res.status(200).send({ token, username: user.username, name: user.name });
+  res.status(200).send({ token, username: user!.username, name: user!.name });
 });
 
 loginRouter.use(expressJwt(expressjwtOptions));

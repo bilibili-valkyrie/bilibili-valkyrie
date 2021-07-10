@@ -1,7 +1,17 @@
 /* eslint-disable no-param-reassign */
 import mongoose from "mongoose";
+import { GetUperInfoResData } from "../api/getUperInfo";
 
-const uperSchema = new mongoose.Schema({
+interface Uper extends GetUperInfoResData {
+  videos: string;
+  mid: string;
+  subscriber: string;
+  lastUpdate: number;
+}
+
+type UperModel = mongoose.Model<Uper>;
+
+const uperSchema = new mongoose.Schema<Uper, UperModel>({
   card: Object,
   lastUpdate: Number,
   following: Boolean,

@@ -12,7 +12,7 @@ require("express-async-errors");
 const subscribeUpdateRouter = express.Router();
 
 subscribeUpdateRouter.put("/markSubscribeRead/:id", async (req, res, next) => {
-  const uperInDB = (await Uper.findById(req.params.id)) as any;
+  const uperInDB = await Uper.findById(req.params.id);
   if (uperInDB === null) {
     return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
   }
@@ -24,7 +24,7 @@ subscribeUpdateRouter.put("/markSubscribeRead/:id", async (req, res, next) => {
 subscribeUpdateRouter.put(
   "/changeSubscribeReadTime/:id",
   async (req, res, next) => {
-    const uperInDB = (await Uper.findById(req.params.id)) as any;
+    const uperInDB = await Uper.findById(req.params.id);
     if (uperInDB === null) {
       return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
     }
@@ -37,7 +37,7 @@ subscribeUpdateRouter.put(
 );
 
 subscribeUpdateRouter.get("/getUpdate/:id", async (req, res, next) => {
-  const uperInDB = (await Uper.findById(req.params.id)) as any;
+  const uperInDB = await Uper.findById(req.params.id);
   if (uperInDB === null) {
     return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
   }
@@ -49,7 +49,7 @@ subscribeUpdateRouter.get("/getUpdate/:id", async (req, res, next) => {
 });
 
 subscribeUpdateRouter.get("/updateVideos/:id", async (req, res, next) => {
-  const uperInDB = (await Uper.findById(req.params.id)) as any;
+  const uperInDB = await Uper.findById(req.params.id);
   if (uperInDB === null) {
     return next({ code: 404, message: `[404] Not Found ${req.params.id}` });
   }

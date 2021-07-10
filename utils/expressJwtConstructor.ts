@@ -9,7 +9,7 @@ const tokenChecker = async (
   payload: { username: string; id: string; iat: number },
   done: any
 ) => {
-  const userInDB = (await User.findById(payload.id)) as any;
+  const userInDB = await User.findById(payload.id);
   if (userInDB === null || userInDB.tokenLastRevokedTime > payload.iat) {
     logger.error(payload.id);
     return done(

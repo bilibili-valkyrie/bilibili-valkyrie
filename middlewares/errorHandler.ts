@@ -19,12 +19,11 @@ const errorHandler = (
       return response.status(400).send(error.message).end();
     case "NotAllowedToSignUpError":
       return response.status(401).send(error.message).end();
+    case "ConflictError":
+      return response.status(409).send(error.message).end();
     default:
       break;
   }
-
-  if (error.errors && error.errors.username.kind === "unique")
-    return response.status(409).end();
 
   switch (error.code) {
     case 10000:

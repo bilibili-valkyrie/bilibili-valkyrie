@@ -1,8 +1,16 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-underscore-dangle */
 import mongoose from "mongoose";
+import { VlistType } from "../api/getUperSpace";
 
-const videoSchema = new mongoose.Schema({
+interface Video extends VlistType {
+  uper: string;
+  subscriber: string;
+}
+
+type VideoModel = mongoose.Model<Video>;
+
+const videoSchema = new mongoose.Schema<Video, VideoModel>({
   uper: { type: mongoose.Schema.Types.ObjectId, ref: "Uper" },
   comment: Number,
   typeid: Number,

@@ -8,6 +8,7 @@ import expressjwtOptions from "../utils/expressJwtConstructor";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
 import NotAllowedToSignUpError from "../errors/NotAllowedToSignUpError";
+import ConflictError from "../errors/ConflictError";
 
 const usersRouter = express.Router();
 const saltRounds = config.get("bcryptConfig.saltRounds") as number;
@@ -19,6 +20,9 @@ usersRouter.post("/", async (req, res) => {
   if (!allowSignUp)
     throw new NotAllowedToSignUpError("[401] Not allowed to sign up");
   const { body } = req;
+  const userInDB = await User.findOne({ username: body.username });
+  if (userInDB !== null)
+    throw new ConflictError(`${body.username} conflicted.`);
   const passwordHash = await bcrypt.hash(body.password, saltRounds);
   const user = new User({
     username: body.username,
@@ -50,7 +54,7 @@ usersRouter.get("/:username", async (req, res, next) => {
 
 usersRouter.put("/", async (req, res, next) => {
   const { body } = req;
-  const user = (await User.findById(req.user.id)) as any;
+  const user = await User.findById(req.user.id);
   if (user === null) {
     return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
   }
@@ -84,7 +88,7 @@ usersRouter.delete("/", async (req, res, next) => {
     return next({ code: 400, message: "[400] invalid password" });
   }
   const userPassword = Base64.decode(password64);
-  const user = (await User.findOne({ username: req.user.username })) as any;
+  const user = await User.findOne({ username: req.user.username });
   if (user === null) {
     return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
   }

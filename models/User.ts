@@ -1,6 +1,5 @@
 /* eslint-disable no-param-reassign */
 import mongoose from "mongoose";
-import uniqueValidator from "mongoose-unique-validator";
 
 export interface UserAsJSON {
   subscribing: string[];
@@ -9,15 +8,23 @@ export interface UserAsJSON {
   tokenLastRevokedTime: number;
 }
 
-const userSchema = new mongoose.Schema({
+interface User {
+  subscribing: string[];
+  username: string;
+  name: string;
+  passwordHash: string;
+  tokenLastRevokedTime: number;
+}
+
+type UserModel = mongoose.Model<User>;
+
+const userSchema = new mongoose.Schema<User, UserModel>({
   subscribing: [{ type: mongoose.Schema.Types.ObjectId, ref: "Uper" }],
   username: { type: String, unique: true },
   name: String,
   passwordHash: String,
   tokenLastRevokedTime: Number,
 });
-
-userSchema.plugin(uniqueValidator);
 
 userSchema.set("toJSON", {
   transform: (_document: any, returnedObject: any) => {
