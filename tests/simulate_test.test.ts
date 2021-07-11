@@ -167,6 +167,14 @@ describe("user update subscribe test", () => {
     expect(res3.body.length).toBe(2);
   });
 
+  test("can get all updated videos", async () => {
+    const res = await api
+      .get(`/api/sub/getAllUpdate`)
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(200);
+    expect(res.body.length).toBe(2);
+  });
+
   test("can update uper's videos", async () => {
     const firstArchiveCount = uperInDB.archive_count;
     const res1 = await api
