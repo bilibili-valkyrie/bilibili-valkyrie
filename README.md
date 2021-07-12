@@ -35,6 +35,60 @@ yarn
 yarn dev
 ```
 
+### 文件结构
+
+```tree
+src
+├── api .............................. BiliBili 的 API
+│   ├── getUperInfo.ts ............... 获取 up 主基本信息
+│   └── getUperSpace.ts .............. 获取 up 主空间页面
+├── app.ts ........................... express实例
+├── controllers ...................... 控制器，存放较复杂的操作
+│   ├── addVideos.ts ................. 获取并更新 up 主上传的视频
+│   └── deleteSubscribe.ts ........... 删除订阅
+├── errors ........................... 定义错误类型
+│   ├── ConflictError.ts ............. 资源冲突
+│   ├── InvalidMidError.ts ........... up 主 UID 不合法
+│   ├── NotAllowedToSignUpError.ts ... 不允许注册
+│   └── NotFoundError.ts ............. 未找到资源
+├── index.ts ......................... 入口
+├── middlewares ...................... 自定义中间件
+│   └── errorHandler.ts .............. 错误处理中间件
+├── models ........................... 存放 mongoose 模型
+│   ├── Uper.ts ...................... Uper 模型
+│   ├── User.ts ...................... User 模型
+│   └── Video.ts ..................... Video 模型
+├── routers .......................... 路由器
+│   ├── biliAPIRouter.ts ............. 对 BiliBili API 进行去 CORS 暴露
+│   ├── loginRouter.ts ............... 负责登录路由
+│   ├── subscribeAddRemoveRouter.ts .. 负责订阅增删
+│   ├── subscribeGetRouter.ts ........ 负责订阅查询
+│   ├── subscribeUpdateRouter.ts ..... 负责订阅更新 / 查询更新
+│   └── usersRouter.ts ............... 负责用户增改删查
+├── tests ............................ 测试
+│   ├── helper
+│   │   ├── apiInstance.ts
+│   │   ├── data
+│   │   │   ├── upers.json
+│   │   │   ├── users.json
+│   │   │   └── videos.json
+│   │   ├── dbRWhelper.ts
+│   │   ├── initUsers.ts
+│   │   ├── testdb_init.ts
+│   │   ├── tokenStorage.ts
+│   │   └── userUsedForTest.ts
+│   ├── simulate_test.test.ts
+│   ├── subscribe_add.test.ts
+│   ├── subscribe_update.test.ts
+│   └── user.test.ts
+└── utils ............................ 杂项
+    ├── expressJwtConstructor.ts ..... 构造 express-jwt 选项
+    ├── getTokenFrom.ts .............. 从请求头中获取 Token
+    ├── logger.ts .................... 记录器
+    ├── rmDB.ts ...................... 一键删库
+    └── wait.ts ...................... Promisify 的 setTimeout() 函数
+```
+
 ## 如何测试
 
 ```bash
