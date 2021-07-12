@@ -1,5 +1,6 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import supertest from "supertest";
-import app from "../../app";
+import app from "../../../app";
 
 class Api {
   api: supertest.SuperTest<supertest.Test>;

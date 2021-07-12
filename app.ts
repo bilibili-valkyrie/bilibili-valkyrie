@@ -5,15 +5,15 @@ import express from "express";
 import jwt from "express-jwt";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import errorHandler from "./middlewares/errorHandler";
-import biliAPIRouter from "./routers/biliAPIRouter";
-import loginRouter from "./routers/loginRouter";
-import subscribeAddRemoveRouter from "./routers/subscribeAddRemoveRouter";
-import subscribeGetRouter from "./routers/subscribeGetRouter";
-import subscribeUpdateRouter from "./routers/subscribeUpdateRouter";
-import usersRouter from "./routers/usersRouter";
-import expressjwtOptions from "./utils/expressJwtConstructor";
-import logger from "./utils/logger";
+import errorHandler from "./src/middlewares/errorHandler";
+import biliAPIRouter from "./src/routers/biliAPIRouter";
+import loginRouter from "./src/routers/loginRouter";
+import subscribeAddRemoveRouter from "./src/routers/subscribeAddRemoveRouter";
+import subscribeGetRouter from "./src/routers/subscribeGetRouter";
+import subscribeUpdateRouter from "./src/routers/subscribeUpdateRouter";
+import usersRouter from "./src/routers/usersRouter";
+import expressjwtOptions from "./src/utils/expressJwtConstructor";
+import logger from "./src/utils/logger";
 
 const databaseURL = config.get("dbConfig.URL") as string;
 
