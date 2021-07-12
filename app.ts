@@ -4,6 +4,7 @@ import cors from "cors";
 import express from "express";
 import jwt from "express-jwt";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import errorHandler from "./middlewares/errorHandler";
 import biliAPIRouter from "./routers/biliAPIRouter";
 import loginRouter from "./routers/loginRouter";
@@ -36,6 +37,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan("dev"));
+}
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use(jwt(expressjwtOptions));
