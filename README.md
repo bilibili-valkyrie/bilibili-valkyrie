@@ -26,7 +26,7 @@ yarn start
 
 ### 开发参考
 
-熟悉 TypeScript 的可以看 [API 示例](https://github.com/bilibili-valkyrie/bilibili-valkyrie-frontend-webpage-react/tree/main/src/api)，里面有各接口从输入到返回的完整的类型定义。至于如何与后端通信可以看[请求模块示例](https://github.com/bilibili-valkyrie/bilibili-valkyrie-frontend-webpage-react/blob/main/src/controller/request.ts)。虽然这两个都是我的 react 版前端的一部分，但它们并不依赖 react，你可以将它们原封不动地搬到自己的 react 项目中。
+熟悉 TypeScript 的可以看 [API 示例](https://github.com/bilibili-valkyrie/bilibili-valkyrie-frontend-webpage-react/tree/main/src/api)，里面有各接口从输入到返回的完整的类型定义。至于如何与后端通信可以看[请求模块示例](https://github.com/bilibili-valkyrie/bilibili-valkyrie-frontend-webpage-react/blob/main/src/controller/request.ts)。虽然这两个都是我的 react 版前端的一部分，但它们并不依赖 react，你可以将它们原封不动地搬到自己的项目中。
 
 如果不熟悉 TypeScript，[请看此](https://github.com/bilibili-valkyrie/bilibili-valkyrie/wiki)，但文档仍在施工中，且部分过时。
 
