@@ -1,7 +1,4 @@
 /* eslint-disable no-param-reassign */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
 import lodash from "lodash";
 import Video from "../models/Video";
 import { VlistType } from "../api/getUperSpace";

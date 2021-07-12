@@ -21,6 +21,8 @@ const errorHandler = (
       return response.status(401).send(error.message).end();
     case "ConflictError":
       return response.status(409).send(error.message).end();
+    case "NotFoundError":
+      return response.status(404).send(error.message).end();
     default:
       break;
   }
@@ -28,8 +30,6 @@ const errorHandler = (
   switch (error.code) {
     case 10000:
       return response.status(409).end();
-    case 404:
-      return response.status(404).end();
     case 409:
       return response.status(409).end();
     case 400:

@@ -9,6 +9,7 @@ import Uper from "../models/Uper";
 import Video from "../models/Video";
 import NotAllowedToSignUpError from "../errors/NotAllowedToSignUpError";
 import ConflictError from "../errors/ConflictError";
+import NotFoundError from "../errors/NotFoundError";
 
 const usersRouter = express.Router();
 const saltRounds = config.get("bcryptConfig.saltRounds") as number;
@@ -41,22 +42,19 @@ usersRouter.get("/", async (_req, res) => {
   res.json(users);
 });
 
-usersRouter.get("/:username", async (req, res, next) => {
+usersRouter.get("/:username", async (req, res) => {
   const user = await User.findOne({ username: req.params.username });
   if (user === null) {
-    return next({
-      code: 404,
-      message: `[404] Not Found ${req.params.username}`,
-    });
+    throw new NotFoundError(`[404] Not Found ${req.params.username}`);
   }
   res.json(user);
 });
 
-usersRouter.put("/", async (req, res, next) => {
+usersRouter.put("/", async (req, res) => {
   const { body } = req;
   const user = await User.findById(req.user.id);
   if (user === null) {
-    return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
+    throw new NotFoundError(`[404] Not Found ${req.user.username}`);
   }
   const passwordCorrect =
     user === null
@@ -90,7 +88,7 @@ usersRouter.delete("/", async (req, res, next) => {
   const userPassword = Base64.decode(password64);
   const user = await User.findOne({ username: req.user.username });
   if (user === null) {
-    return next({ code: 404, message: `[404] Not Found ${req.user.username}` });
+    throw new NotFoundError(`[404] Not Found ${req.user.username}`);
   }
   const passwordCorrect =
     user === null
