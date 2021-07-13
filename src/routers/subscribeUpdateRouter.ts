@@ -2,9 +2,7 @@
 import { getUnixTime } from "date-fns";
 import express from "express";
 import lodash from "lodash";
-import getUperInfo from "../api/getUperInfo";
-import getUperSpace from "../api/getUperSpace";
-import addVideos from "../controllers/addVideos";
+import updateSubscribe from "../controllers/updateSubscribe";
 import NotFoundError from "../errors/NotFoundError";
 import Uper from "../models/Uper";
 import Video from "../models/Video";
@@ -64,16 +62,7 @@ subscribeUpdateRouter.get("/updateVideos/:id", async (req, res) => {
   if (uperInDB === null) {
     throw new NotFoundError(`[404] Not Found ${req.params.id}`);
   }
-  const getUperInfoRes = await getUperInfo(uperInDB.mid);
-  const getUperInfoResData = getUperInfoRes.data;
-  if (getUperInfoResData.archive_count === uperInDB.archive_count) {
-    const noUpdateRes = { updates: 0 };
-    return res.json(noUpdateRes);
-  }
-  const updateCount = getUperInfoResData.archive_count - uperInDB.archive_count;
-  const getUperSpaceRes = await getUperSpace(uperInDB.mid);
-  uperInDB.archive_count = getUperInfoResData.archive_count;
-  await addVideos(getUperSpaceRes.list.vlist, uperInDB);
+  const updateCount = await updateSubscribe(uperInDB);
   res.json({ updates: updateCount });
 });
 
