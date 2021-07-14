@@ -15,6 +15,8 @@ const errorHandler = (
   }
 
   switch (error.name) {
+    case "TypeError":
+      return response.status(400).send(error.message).end();
     case "InvalidMidError":
       return response.status(400).send(error.message).end();
     case "NotAllowedToSignUpError":
