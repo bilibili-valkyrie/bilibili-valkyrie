@@ -16,6 +16,7 @@ import expressjwtOptions from "./utils/expressJwtConstructor";
 import logger from "./utils/logger";
 
 const databaseURL = config.get("dbConfig.URL") as string;
+const corsOrigin = config.get("corsOrigin") as string;
 
 require("express-async-errors");
 
@@ -35,7 +36,7 @@ mongoose
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: corsOrigin, optionsSuccessStatus: 200 }));
 app.use(express.json());
 if (process.env.NODE_ENV === "production") {
   app.use(morgan("dev"));

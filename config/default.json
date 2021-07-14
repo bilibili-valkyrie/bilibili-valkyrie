@@ -7,5 +7,6 @@
     "saltRounds": 10
   },
   "jwtSecrets": "FkYouChenRui",
-  "allowSignUp": true
+  "allowSignUp": true,
+  "corsOrigin": "*"
 }

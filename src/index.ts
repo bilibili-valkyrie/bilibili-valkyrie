@@ -11,9 +11,11 @@ import socketioJwtOptions from "./utils/socketioJwtConstructor";
 import wait from "./utils/wait";
 
 const PORT = config.get("port");
+const corsOrigin = config.get("corsOrigin") as string;
 
 const io = new Server(server, {
   path: "/api/ws/",
+  cors: { origin: corsOrigin },
 });
 
 io.use(authorize(socketioJwtOptions));
