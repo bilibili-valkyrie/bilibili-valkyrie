@@ -53,7 +53,9 @@ const getUperSpace = async (
   ps = 30
 ): Promise<QuerySpaceResData> => {
   const { data }: { data: QuerySpaceRes } = await axios.get(
-    `https://api.bilibili.com/x/space/arc/search?mid=${mid}&pn=${pn}&ps=${ps}`,
+    `https://api.bilibili.com/x/space/arc/search?mid=${encodeURI(
+      mid.toString()
+    )}&pn=${pn}&ps=${ps}`,
     {
       headers: {
         "User-Agent":

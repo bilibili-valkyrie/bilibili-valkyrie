@@ -91,7 +91,9 @@ export interface GetUperInfoRes {
 
 const getUperInfo = async (mid: number | string): Promise<GetUperInfoRes> => {
   const res = await axios.get(
-    `http://api.bilibili.com/x/web-interface/card?mid=${mid}`,
+    `http://api.bilibili.com/x/web-interface/card?mid=${encodeURI(
+      mid.toString()
+    )}`,
     {
       headers: {
         "User-Agent":
