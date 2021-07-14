@@ -27,7 +27,11 @@ io.on("connection", (socket: Socket) => {
       index += 1;
       const updateCount = await updateSubscribe(uperInDB);
       updateSum += updateCount;
-      socket.emit("updateASubscribe", { updates: updateCount });
+      socket.emit("updateASubscribe", {
+        name: uperInDB.card.name,
+        updates: updateCount,
+        progress: index / upersInDB.length,
+      });
       if (index !== upersInDB.length) {
         await wait(2000 + Math.random() * 1000);
       }
