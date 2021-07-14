@@ -2,3 +2,4 @@ node_modules
 build
 logs
 yarn-error.log
+dist
