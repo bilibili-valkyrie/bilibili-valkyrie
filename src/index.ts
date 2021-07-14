@@ -22,12 +22,17 @@ io.on("connection", (socket: Socket) => {
   socket.on("updateAllSubscribe", async () => {
     const upersInDB = await Uper.find({ subscriber: socket.decodedToken.id });
     let updateSum = 0;
+    let index = 0;
     for await (const uperInDB of upersInDB) {
+      index += 1;
       const updateCount = await updateSubscribe(uperInDB);
       updateSum += updateCount;
-      await wait(2000);
+      socket.emit("updateASubscribe", { updates: updateCount });
+      if (index !== upersInDB.length) {
+        await wait(2000 + Math.random() * 1000);
+      }
     }
-    socket.emit("updateAllSubscribe", { updates: updateSum });
+    socket.emit("updateAllSubscribe", { totalUpdates: updateSum });
   });
 });
 
