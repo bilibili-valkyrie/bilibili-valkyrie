@@ -1,7 +1,9 @@
 /* eslint-disable consistent-return */
 import { getUnixTime } from "date-fns";
 import express from "express";
-import lodash from "lodash";
+import getUperSpace from "../api/getUperSpace";
+import addVideos from "../controllers/addVideos";
+import trimVideos from "../controllers/trimVideos";
 import updateSubscribe from "../controllers/updateSubscribe";
 import NotFoundError from "../errors/NotFoundError";
 import Uper from "../models/Uper";
@@ -18,6 +20,7 @@ subscribeUpdateRouter.put("/markSubscribeRead/:id", async (req, res) => {
   }
   uperInDB.lastUpdate = getUnixTime(Date.now());
   await uperInDB.save();
+  await trimVideos(uperInDB);
   res.json(uperInDB);
 });
 
@@ -29,6 +32,8 @@ subscribeUpdateRouter.put("/changeSubscribeReadTime/:id", async (req, res) => {
   uperInDB.lastUpdate = req.body.lastUpdateUnix
     ? req.body.lastUpdateUnix
     : getUnixTime(req.body.lastUpdateJS);
+  const getUperSpaceRes = await getUperSpace(uperInDB.mid);
+  await addVideos(getUperSpaceRes.list.vlist, uperInDB);
   await uperInDB.save();
   res.json(uperInDB);
 });
@@ -38,23 +43,13 @@ subscribeUpdateRouter.get("/getUpdate/:id", async (req, res) => {
   if (uperInDB === null) {
     throw new NotFoundError(`[404] Not Found ${req.params.id}`);
   }
-  const newVideos = await Video.find()
-    .where("uper", req.params.id)
-    .gte("created", uperInDB.lastUpdate);
+  const newVideos = await Video.find({ uper: req.params.id });
   res.json(newVideos);
 });
 
 subscribeUpdateRouter.get("/getAllUpdate", async (req, res) => {
-  const upersInDB = await Uper.find({ subscriber: req.user.id });
-  const videosPAry = upersInDB.map(async (uperInDB) => {
-    const newVideos = await Video.find()
-      .where("uper", uperInDB._id)
-      .gte("created", uperInDB.lastUpdate);
-    return newVideos;
-  });
-  const videosAry2 = await Promise.all(videosPAry);
-  const videosAry1 = lodash.flattenDeep(videosAry2);
-  res.json(videosAry1);
+  const newVideos = await Video.find({ subscriber: req.user.id });
+  res.json(newVideos);
 });
 
 subscribeUpdateRouter.get("/updateVideos/:id", async (req, res) => {

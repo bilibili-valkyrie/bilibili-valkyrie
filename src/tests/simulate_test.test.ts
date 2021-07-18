@@ -153,6 +153,10 @@ describe("user update subscribe test", () => {
       .get(`/api/sub/getUpdate/${uperInDB.id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res1.body).toStrictEqual([]);
+    await api
+      .put(`/api/sub/changeSubscribeReadTime/${uperInDB.id}`)
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send({ lastUpdateJS: 0 });
     const res2 = await api
       .get(`/api/sub/getStatus/${uperInDB.id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
@@ -203,15 +207,24 @@ describe("user and subscribe delete test", () => {
       .get("/api/sub/addSubscribe/66607740")
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res2.statusCode).toBe(201);
+    const res3 = await api
+      .get("/api/sub/getAllstatus")
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .expect(200);
+    [uperInDB] = res3.body;
   });
 
   test("user can write off", async () => {
+    await api
+      .put(`/api/sub/changeSubscribeReadTime/${uperInDB.id}`)
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send({ lastUpdateJS: 0 });
     const usersBeforeWriteOff = await dbRWhelper.usersInDB();
     expect(usersBeforeWriteOff.length).toBe(2);
     const upersBeforeWriteOff = await dbRWhelper.upersInDB();
     expect(upersBeforeWriteOff.length).toBe(2);
     const videosBeforeWriteOff = await dbRWhelper.videosInDB();
-    expect(videosBeforeWriteOff.length).toBe(60);
+    expect(videosBeforeWriteOff.length).toBe(30);
     await api
       .delete(`/api/users?paword=${Base64.encode(userUsedForTest.password)}`)
       .set("authorization", `bearer ${tokenStorage.token}`)
@@ -221,7 +234,7 @@ describe("user and subscribe delete test", () => {
     const upersAfterWriteOff = await dbRWhelper.upersInDB();
     expect(upersAfterWriteOff.length).toBe(1);
     const videosAfterWriteOff = await dbRWhelper.videosInDB();
-    expect(videosAfterWriteOff.length).toBe(30);
+    expect(videosAfterWriteOff.length).toBe(0);
   });
 
   test("should not able to login after write off", async () => {

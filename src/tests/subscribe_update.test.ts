@@ -58,6 +58,10 @@ describe("Subscribe update test", () => {
       .get(`/api/sub/getUpdate/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);
     expect(res1.body).toStrictEqual([]);
+    await api
+      .put(`/api/sub/changeSubscribeReadTime/${uperInDB._id}`)
+      .set("authorization", `bearer ${tokenStorage.token}`)
+      .send({ lastUpdateJS: 0 });
     const res2 = await api
       .get(`/api/sub/getStatus/${uperInDB._id}`)
       .set("authorization", `bearer ${tokenStorage.token}`);

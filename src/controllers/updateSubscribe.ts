@@ -4,10 +4,12 @@ import getUperInfo from "../api/getUperInfo";
 import getUperSpace from "../api/getUperSpace";
 import Uper from "../models/Uper";
 import addVideos from "./addVideos";
+import trimVideos from "./trimVideos";
 
 const updateSubscribe = async (
   uperInDB: Uper & Document<any, any, Uper>
 ): Promise<number> => {
+  await trimVideos(uperInDB);
   const getUperInfoRes = await getUperInfo(uperInDB.mid);
   const getUperInfoResData = getUperInfoRes.data;
   if (getUperInfoResData.archive_count === uperInDB.archive_count) {

@@ -1,18 +1,21 @@
 /* eslint-disable no-param-reassign */
 import lodash from "lodash";
+import { Document } from "mongoose";
 import Video from "../models/Video";
 import { VlistType } from "../api/getUperSpace";
+import Uper from "../models/Uper";
+import trimVideos from "./trimVideos";
 
 const addVideos = async (
   vlist: VlistType[],
-  uper: Record<string, any>
-): Promise<void> => {
+  uper: Uper & Document<any, any, Uper>
+): Promise<Uper & Document<any, any, Uper>> => {
   const videoToDBPAry = vlist.map(async (newVideo) => {
     const exist = await Video.exists({
       aid: newVideo.aid,
       uper: uper._id,
     });
-    if (!exist) {
+    if (!exist && newVideo.created >= uper.lastUpdate) {
       return {
         ...newVideo,
         uper: uper._id,
@@ -32,6 +35,7 @@ const addVideos = async (
     videosSet.add(id);
   });
   uper.videos = Array.from(videosSet);
+  await trimVideos(uper);
   const savedUper = await uper.save();
   return savedUper;
 };

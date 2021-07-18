@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { GetUperInfoResData } from "../api/getUperInfo";
 
 interface Uper extends GetUperInfoResData {
-  videos: string;
+  videos: string[];
   mid: string;
   subscriber: string;
   lastUpdate: number;
