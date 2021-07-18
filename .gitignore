@@ -3,3 +3,4 @@ build
 logs
 yarn-error.log
 dist
+config/production.json
