@@ -1,0 +1,12 @@
+{
+  "dbConfig": {
+    "URL": "mongodb://localhost:27017/valkyrie"
+  },
+  "port": 3001,
+  "bcryptConfig": {
+    "saltRounds": 10
+  },
+  "jwtSecrets": "FkYouChenRui",
+  "allowSignUp": true,
+  "corsOrigin": "*"
+}
