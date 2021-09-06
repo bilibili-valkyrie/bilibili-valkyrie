@@ -19,7 +19,7 @@
   "private": false,
   "dependencies": {
     "@thream/socketio-jwt": "^2.1.1",
-    "axios": "^0.21.1",
+    "axios": "^0.21.3",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.3",
     "config": "^3.3.6",
