@@ -21,7 +21,7 @@
     "@thream/socketio-jwt": "^2.1.1",
     "axios": "^0.23.0",
     "bcryptjs": "^2.4.3",
-    "bufferutil": "^4.0.4",
+    "bufferutil": "^4.0.5",
     "config": "^3.3.6",
     "cors": "^2.8.5",
     "date-fns": "^2.25.0",
