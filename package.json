@@ -18,7 +18,7 @@
   "license": "GPL-3.0",
   "private": false,
   "dependencies": {
-    "@thream/socketio-jwt": "^2.1.1",
+    "@thream/socketio-jwt": "^2.2.1",
     "axios": "^0.26.0",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.6",
