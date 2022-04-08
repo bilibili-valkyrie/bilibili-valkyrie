@@ -773,10 +773,10 @@
   resolved "https://registry.yarnpkg.com/@socket.io/base64-arraybuffer/-/base64-arraybuffer-1.0.2.tgz#568d9beae00b0d835f4f8c53fd55714986492e61"
   integrity sha512-dOlCBKnDw4iShaIsH/bxujKTM18+2TOAsYz+KSc11Am38H4q5Xw8Bbz97ZYdrVNM+um3p7w86Bvvmcn9q+5+eQ==
 
-"@thream/socketio-jwt@^2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@thream/socketio-jwt/-/socketio-jwt-2.2.1.tgz#80b907e252d42b4423c883ec63fe348e3af1360e"
-  integrity sha512-XHvNwSBoTkp/O+oprUkbcNcADtGXneeiMqw9WDPhKdUhGFuhkscqgWNpeDuh1d9FI/J/J7k+/vmeasABKZY5yg==
+"@thream/socketio-jwt@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@thream/socketio-jwt/-/socketio-jwt-3.0.0.tgz#0cbac4dffd6e94c0397c73923ddf7cbe2df530af"
+  integrity sha512-1T2VMela+E9/W1/nApiM4P8SkKBYgAXaToYklF9nSOa4SCMhg0AsmPhFvKsQmQhIC6K4rUxUrJbyOA2eQedFzA==
   dependencies:
     jsonwebtoken "8.5.1"
 
