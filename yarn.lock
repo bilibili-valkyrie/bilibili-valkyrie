@@ -1340,11 +1340,6 @@ ast-types-flow@^0.0.7:
   resolved "https://registry.yarnpkg.com/ast-types-flow/-/ast-types-flow-0.0.7.tgz#f70b735c6bca1a5c9c22d982c3e39e7feba3bdad"
   integrity sha1-9wtzXGvKGlycItmCw+Oef+ujva0=
 
-async@^1.5.0:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/async/-/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
-  integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
-
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -2416,15 +2411,13 @@ express-async-errors@^3.1.1:
   resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.1.1.tgz#6053236d61d21ddef4892d6bd1d736889fc9da41"
   integrity sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==
 
-express-jwt@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-6.1.1.tgz#2b157fb4fa33c2d367ee71c61b5aca762de39657"
-  integrity sha512-m8gkY04v5jtiFZn6bYQINYX/DVXq1DVb5nIW7H8l87qJ4BBvtQKFRpxyRE31odct7OPfHdT+B8678zJHhlMrpw==
+express-jwt@^7.4.2:
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-7.4.2.tgz#30c1fe32407915a614883538cfba3c8a5adda488"
+  integrity sha512-gTfBKSGUg3ONxnv3BUOhO8wBB+iO03S3GXT/qJmmKDYUt0qkwydcuL8POQ/JIyV3PSGuK6kNw7esx4owyPkhQQ==
   dependencies:
-    async "^1.5.0"
     express-unless "^1.0.0"
-    jsonwebtoken "^8.1.0"
-    lodash "^4.17.21"
+    jsonwebtoken "^8.5.1"
 
 express-unless@^1.0.0:
   version "1.0.0"
@@ -3587,7 +3580,7 @@ json5@^1.0.1:
   dependencies:
     minimist "^1.2.0"
 
-jsonwebtoken@8.5.1, jsonwebtoken@^8.1.0, jsonwebtoken@^8.5.1:
+jsonwebtoken@8.5.1, jsonwebtoken@^8.5.1:
   version "8.5.1"
   resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
   integrity sha512-XjwVfRS6jTMsqYs0EsuJ4LGxXV14zQybNd4L2r0UvbVnSF9Af8x7p5MzbJ90Ioz/9TI41/hTCvznF/loiSzn8w==
