@@ -2391,10 +2391,10 @@ express-async-errors@^3.1.1:
   resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.1.1.tgz#6053236d61d21ddef4892d6bd1d736889fc9da41"
   integrity sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==
 
-express-jwt@^7.5.0:
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-7.5.0.tgz#d157f6439fd1d993e020e6e978ba1f86de9bdec0"
-  integrity sha512-q0Cruib3rnZQWDSkYhjdk9Sax3XhgHZQ7h6nR2dOWtLfGMMRvxtQqYFkqIbZJrE6nPPDrUluRptFtWg2wrscOg==
+express-jwt@^7.5.2:
+  version "7.5.2"
+  resolved "https://registry.yarnpkg.com/express-jwt/-/express-jwt-7.5.2.tgz#9260d5f16db6b1b96c967560f42b7e4b7b353b3e"
+  integrity sha512-EHxPT8mNMT32dLlCrL98KZlKbSuP6Uc3s4PczoUtjxJoS7tfuXjz2/VOryAaVR59C2FhuOMCSFUW3hadkwEuZw==
   dependencies:
     express-unless "^1.0.0"
     jsonwebtoken "^8.5.1"
