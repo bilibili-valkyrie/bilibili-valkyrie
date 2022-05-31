@@ -31,7 +31,7 @@
     "js-base64": "^3.7.2",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "mongoose": "^6.3.4",
+    "mongoose": "^6.3.5",
     "morgan": "^1.10.0",
     "socket.io": "^4.5.1",
     "utf-8-validate": "^5.0.9"
