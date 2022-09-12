@@ -22,7 +22,7 @@
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "bufferutil": "^4.0.6",
-    "config": "^3.3.7",
+    "config": "^3.3.8",
     "cors": "^2.8.5",
     "date-fns": "^2.29.2",
     "express": "^4.18.1",
