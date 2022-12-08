@@ -53,7 +53,7 @@
     "eslint-config-airbnb-typescript-prettier": "^5.0.0",
     "jest": "^27.5.1",
     "prettier": "^2.8.1",
-    "supertest": "^6.3.2",
+    "supertest": "^6.3.3",
     "ts-jest": "^27.1.4",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
