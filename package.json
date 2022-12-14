@@ -46,7 +46,7 @@
     "@types/lodash": "^4.14.191",
     "@types/mongoose-unique-validator": "^1.0.6",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^18.11.13",
+    "@types/node": "^18.11.15",
     "@types/supertest": "^2.0.12",
     "cross-env": "^7.0.3",
     "eslint": "^8.29.0",
