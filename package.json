@@ -40,7 +40,7 @@
     "@types/bcryptjs": "^2.4.2",
     "@types/config": "^3.3.0",
     "@types/cors": "^2.8.13",
-    "@types/express": "^4.17.14",
+    "@types/express": "^4.17.15",
     "@types/jest": "^27.5.0",
     "@types/jsonwebtoken": "^8.5.9",
     "@types/lodash": "^4.14.191",
