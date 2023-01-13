@@ -1,5 +1,10 @@
 # bilibili-valkyrie 哔哩哔哩-瓦尔基里
 
+> **Warning**  
+> Deprecated. Please use [bilibili_subscriber](https://github.com/lixiang810/bilibili_subscriber) instead.
+
+---
+
 Bilibili 自搭建（第三方）哔哩哔哩关注服务
 
 > In memory of my 6-digit UID account which was permanently banned by bilibili at 2021-06-11  
