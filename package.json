@@ -42,7 +42,7 @@
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.15",
     "@types/jest": "^27.5.0",
-    "@types/jsonwebtoken": "^9.0.0",
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/lodash": "^4.14.191",
     "@types/mongoose-unique-validator": "^1.0.6",
     "@types/morgan": "^1.9.4",
